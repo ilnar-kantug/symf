@@ -20,10 +20,6 @@
     <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
     <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
     <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
-    <rule ref="Generic.CodeAnalysis.AssignmentInCondition">
-        <type>error</type>
-        <severity>8</severity>
-    </rule>
     <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
 
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
