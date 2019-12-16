@@ -10,6 +10,7 @@
     <rule ref="PSR12"/>
 
     <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>*/Migrations/*</exclude-pattern>
         <type>warning</type>
         <severity>1</severity>
     </rule>
