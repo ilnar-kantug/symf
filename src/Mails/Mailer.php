@@ -26,14 +26,15 @@ abstract class Mailer
      * Mailer constructor.
      * @param MailerInterface $mailer
      * @param Environment $twig
+     * @param string $defaultMailFrom
      */
     public function __construct(
         MailerInterface $mailer,
-        Environment $twig
+        Environment $twig,
+        string $defaultMailFrom
     ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
-        //TODO to configs
-        $this->mailFrom = 'me@me.me';
+        $this->mailFrom = $defaultMailFrom;
     }
 }
