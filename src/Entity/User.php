@@ -5,10 +5,16 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="I think you're already registered!"
+ * )
  */
 class User implements UserInterface
 {
@@ -23,6 +29,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Please enter an email")
+     * @Assert\Email()
+     * @Assert\Length(max="180", minMessage="Your email is too long")
      */
     private $email;
 
@@ -41,6 +50,13 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $confirmToken;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter your full name")
+     * @Assert\Length(max="255", minMessage="Your full name is too long")
+     */
+    private $fullName;
 
     public function getId(): ?int
     {
@@ -135,5 +151,17 @@ class User implements UserInterface
     public function isEnabled(): bool
     {
         return empty($this->confirmToken);
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(string $fullName): self
+    {
+        $this->fullName = $fullName;
+
+        return $this;
     }
 }
