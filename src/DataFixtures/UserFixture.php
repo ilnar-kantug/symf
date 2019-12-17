@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\User;
@@ -24,14 +26,14 @@ class UserFixture extends BaseFixture
         $this->tokenGenerator = $tokenGenerator;
     }
 
-    protected function loadData(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager): void
     {
         $this->createConfirmedUsers();
         $this->createUnConfirmedUsers();
         $manager->flush();
     }
 
-    private function createConfirmedUsers(int $count = 1)
+    private function createConfirmedUsers(int $count = 1): void
     {
         $this->createMany($count, 'confirmed_users', function () {
             $user = new User();
@@ -42,7 +44,7 @@ class UserFixture extends BaseFixture
         });
     }
 
-    private function createUnConfirmedUsers(int $count = 1)
+    private function createUnConfirmedUsers(int $count = 1): void
     {
         $this->createMany($count, 'unconfirmed_users', function () {
             $user = new User();

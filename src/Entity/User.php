@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -130,7 +132,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return empty($this->confirmToken);
     }

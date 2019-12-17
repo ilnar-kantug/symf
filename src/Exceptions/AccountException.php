@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
@@ -9,7 +11,7 @@ use Symfony\Component\Security\Core\Exception\AccountStatusException;
  */
 class AccountException extends AccountStatusException
 {
-    public function getMessageKey()
+    public function getMessageKey(): string
     {
         return $this->getMessage();
     }

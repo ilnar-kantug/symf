@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -17,9 +19,9 @@ abstract class BaseFixture extends Fixture
 
     private $referencesIndex = [];
 
-    abstract protected function loadData(ObjectManager $manager);
+    abstract protected function loadData(ObjectManager $manager): void;
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
         $this->faker = Factory::create();
@@ -43,7 +45,7 @@ abstract class BaseFixture extends Fixture
      *                            to fetch only from this specific group.
      * @param callable $factory
      */
-    protected function createMany(int $count, string $groupName, callable $factory)
+    protected function createMany(int $count, string $groupName, callable $factory): void
     {
         for ($i = 0; $i < $count; $i++) {
             $entity = $factory($i);
@@ -61,7 +63,7 @@ abstract class BaseFixture extends Fixture
         }
     }
 
-    protected function getRandomReference(string $groupName)
+    protected function getRandomReference(string $groupName): object
     {
         if (!isset($this->referencesIndex[$groupName])) {
             $this->referencesIndex[$groupName] = [];
@@ -87,7 +89,7 @@ abstract class BaseFixture extends Fixture
         return $this->getReference($randomReferenceKey);
     }
 
-    protected function getRandomReferences(string $className, int $count)
+    protected function getRandomReferences(string $className, int $count): array
     {
         $references = [];
         while (count($references) < $count) {

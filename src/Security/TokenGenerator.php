@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use Psr\Log\LoggerInterface;
@@ -18,10 +20,6 @@ class TokenGenerator
         $this->logger = $logger;
     }
 
-    /**
-     * @param int $length
-     * @return string
-     */
     public function getRandomSecureToken(int $length): string
     {
         $maxNumber = strlen(self::ALPHABET);
