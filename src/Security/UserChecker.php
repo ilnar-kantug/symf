@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security;
 
 use App\Entity\User;
-use Symfony\Component\Security\Core\Exception\DisabledException;
+use App\Exceptions\AccountException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -18,7 +18,7 @@ class UserChecker implements UserCheckerInterface
         }
 
         if (!$identity->isEnabled()) {
-            $exception = new DisabledException('User account is not confirmed.');
+            $exception = new AccountException('User account is not confirmed.');
             $exception->setUser($identity);
             throw $exception;
         }
