@@ -49,7 +49,7 @@ class UserFixture extends BaseFixture
         $this->createMany($count, 'unconfirmed_users', function () {
             $user = new User();
             $user->setEmail($this->faker->unique()->email);
-            $user->setConfirmToken($this->tokenGenerator->getRandomSecureToken(15));
+            $user->setConfirmToken($this->tokenGenerator->getRandomSecureToken());
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
             $user->setRoles([User::ROLE_USER]);
             return $user;

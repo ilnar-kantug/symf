@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Form\UserRegisterFormType;
+use App\Entity\User;
+use App\Form\UserRegisterFormType as UserForm;
+use App\Security\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,13 +36,25 @@ class SecurityController extends AbstractController
     /**
      * @Route("/sign-up", name="app_sign_up")
      */
-    public function register(Request $request, AuthenticationUtils $authenticationUtils): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, TokenGenerator $tokenGenerator): Response
     {
-        $form = $this->createForm(UserRegisterFormType::class);
+        $form = $this->createForm(UserForm::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            dd('post');
+        if ($form->isSubmitted() && $form->isValid() && $form[UserForm::AGREE_TERMS]->getData()) {
+            $user = new User();
+            $user->setEmail($form[UserForm::EMAIL]->getData());
+            $user->setFullName($form[UserForm::FULL_NAME]->getData());
+            $user->setConfirmToken($tokenGenerator->getRandomSecureToken());
+            $user->setPassword($passwordEncoder->encodePassword($user, $form[UserForm::PLAIN_PASSWORD]->getData()));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Success! We sent a mail to you, so check it and confirm your email.');
+
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/sign_up.html.twig', [

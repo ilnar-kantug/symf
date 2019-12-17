@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\User;
@@ -16,14 +18,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserRegisterFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public const FULL_NAME = 'fullName';
+    public const EMAIL = 'email';
+    public const PLAIN_PASSWORD = 'plainPassword';
+    public const AGREE_TERMS = 'agreeTerms';
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fullName', TextType::class, [
+            ->add(self::FULL_NAME, TextType::class, [
                 'label' => 'Your Full Name',
             ])
-            ->add('email')
-            ->add('plainPassword', RepeatedType::class, [
+            ->add(self::EMAIL)
+            ->add(self::PLAIN_PASSWORD, RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Password'],
@@ -38,7 +45,7 @@ class UserRegisterFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('agreeTerms', CheckboxType::class, [
+            ->add(self::AGREE_TERMS, CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -50,7 +57,7 @@ class UserRegisterFormType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,

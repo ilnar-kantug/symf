@@ -20,7 +20,7 @@ class TokenGenerator
         $this->logger = $logger;
     }
 
-    public function getRandomSecureToken(int $length): string
+    public function getRandomSecureToken(int $length = 20): string
     {
         $maxNumber = strlen(self::ALPHABET);
         $token = '';
