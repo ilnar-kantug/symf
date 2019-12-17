@@ -7,8 +7,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Event\UserRegisteredEvent;
 use App\Form\UserRegisterFormType as UserForm;
+use App\Repository\UserRepository;
 use App\Security\TokenGenerator;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 
-class SecurityController extends AbstractController
+class SecurityController extends BaseController
 {
     /**
      * @Route("/login", name="app_login")
@@ -73,9 +73,24 @@ class SecurityController extends AbstractController
     /**
      * @Route("/confirm", name="app_confirm_email")
      */
-    public function confirm(Request $request)
+    public function confirm(Request $request, UserRepository $userRepository)
     {
-        //
+        if (empty($token = $request->get('token'))) {
+            return $this->fallWithError('You have no token. Contact to admin.');
+        }
+        $user = $userRepository->findOneBy([
+            User::ATTR_CONFIRM_TOKEN => $token
+        ]);
+
+        if ($user === null) {
+            return $this->fallWithError('No users for to this token. Contact to admin.');
+        }
+
+        $user->setConfirmToken(null);
+        $this->getDoctrine()->getManager()->flush();
+
+        $this->addFlash('success', 'Success! Now you can login!');
+        return $this->redirectToRoute('app_login');
     }
 
     /**

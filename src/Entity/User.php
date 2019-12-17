@@ -20,6 +20,13 @@ class User implements UserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
+
+    public const ATTR_EMAIL = 'email';
+    public const ATTR_ROLES = 'roles';
+    public const ATTR_PASSWORD = 'password';
+    public const ATTR_CONFIRM_TOKEN = 'confirmToken';
+    public const ATTR_FULL_NAME = 'fullName';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
