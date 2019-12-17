@@ -9,8 +9,10 @@ class TagFixture extends BaseFixture
 {
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Tag::class, 20, function (Tag $tag) {
+        $this->createMany(20, 'tags', function () {
+            $tag = new Tag();
             $tag->setName($this->faker->unique()->word);
+            return $tag;
         });
 
         $manager->flush();
