@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
+    public const STATUS_DRAFT = 0;
+    public const STATUS_CHECKING = 1;
+    public const STATUS_DECLINED = 2;
+    public const STATUS_PUBLISHED = 3;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

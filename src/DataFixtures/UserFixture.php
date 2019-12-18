@@ -28,7 +28,7 @@ class UserFixture extends BaseFixture
 
     protected function loadData(ObjectManager $manager): void
     {
-        $this->createConfirmedUsers();
+        $this->createConfirmedUsers(20);
         $this->createUnConfirmedUsers();
         $manager->flush();
     }
@@ -40,6 +40,7 @@ class UserFixture extends BaseFixture
             $user->setEmail($this->faker->unique()->email);
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
             $user->setRoles([User::ROLE_USER]);
+            $user->setFullName($this->faker->name);
             return $user;
         });
     }
@@ -52,6 +53,7 @@ class UserFixture extends BaseFixture
             $user->setConfirmToken($this->tokenGenerator->getRandomSecureToken());
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
             $user->setRoles([User::ROLE_USER]);
+            $user->setFullName($this->faker->name);
             return $user;
         });
     }
