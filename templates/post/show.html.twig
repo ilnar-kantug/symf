@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+    <div class="post-show">
+        <h1>{{ post.title }}</h1>
+        <div>
+            {% include 'partials/tags.html.twig' with {'tags': post.tags} %}
+        </div>
+
+        <div class="post-show-body">
+            {{ post.body }}
+        </div>
+
+        <div>
+            Author: {{ post.author.fullName }}
+        </div>
+        <div>
+            Rating
+        </div>
+
+        <div>
+            Comments
+        </div>
+
+        <div>
+            Add comment
+        </div>
+    </div>
+{% endblock %}

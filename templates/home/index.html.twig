@@ -24,7 +24,7 @@
                     <div>
                         Comments count
                     </div>
-                    <div class="read-more"><a href="#" class="btn btn-primary">Read more</a></div>
+                    <div class="read-more"><a href="{{ path('post_show', {id: post.id}) }}" class="btn btn-primary">Read more</a></div>
                 </div>
             </div>
         {% endfor %}
