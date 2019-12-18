@@ -48,5 +48,4 @@ class SendConfirmMail implements EventSubscriberInterface
             $this->logger->error($e->getMessage() . ' ' . $e->getTraceAsString());
         }
     }
-
 }

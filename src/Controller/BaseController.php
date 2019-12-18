@@ -30,6 +30,6 @@ class BaseController extends AbstractController
 
     protected function getPage(): int
     {
-       return $this->request->get(Paginator::PAGE) ?: Paginator::DEFAULT_PAGE;
+        return $this->request->get(Paginator::PAGE) ?: Paginator::DEFAULT_PAGE;
     }
 }

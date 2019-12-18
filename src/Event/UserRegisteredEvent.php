@@ -28,5 +28,4 @@ class UserRegisteredEvent extends Event
     {
         return $this->registeredUser;
     }
-
 }
