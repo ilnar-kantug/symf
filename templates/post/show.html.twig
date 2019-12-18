@@ -20,9 +20,26 @@
             Rating
         </div>
 
-        <div>
-            Comments
-        </div>
+        {% if post.comments %}
+            <div>
+                <h4 class="my-4">Comments</h4>
+                {% for comment in post.comments %}
+                    <div class="card my-3 post-show-comment">
+                        <div class="card-header post-show-comment-header">
+                            <div>
+                                Author: {{ comment.author.fullName }}
+                            </div>
+                            <div class="post-show-comment-header-posted">
+                                posted: {{ comment.createdAt|date("d-m-Y H:i") }}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            {{ comment.body }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div>
