@@ -24,8 +24,10 @@
             Comments
         </div>
 
-        <div>
-            Add comment
-        </div>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div>
+                Add comment
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
