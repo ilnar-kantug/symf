@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
@@ -28,10 +29,25 @@ class PostRepository extends ServiceEntityRepository
         $this->paginator = $paginator;
     }
 
-    public function getQueryForAllPublished()
+    public function getQueryForAllPublished(): QueryBuilder
     {
         return $this->createQueryBuilder('post')
             ->andWhere('post.status = :published')
-            ->setParameter('published', Post::STATUS_PUBLISHED);
+            ->setParameter('published', Post::STATUS_PUBLISHED)
+            ->join('post.author', 'author')
+            ->join('post.tags', 'tags')
+            ->addSelect('author, tags');
+    }
+
+    public function getPostWithComments(int $id): Post
+    {
+        return $this->createQueryBuilder('post')
+            ->andWhere('post.id = :id')
+            ->setParameter('id', $id)
+            ->join('post.comments', 'comments')
+            ->join('comments.author', 'comment_author')
+            ->addSelect('comments, comment_author')
+            ->getQuery()
+            ->getSingleResult();
     }
 }
