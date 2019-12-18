@@ -6,6 +6,7 @@ RUN apt-get update \
     && apt-get install -y libmagickwand-dev --no-install-recommends \
     libxml2-dev \
     libzip-dev \
+    && apt-get install -y git mc curl wget zip unzip \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
