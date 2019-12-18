@@ -1,0 +1,7 @@
+{% if tags %}
+    <div>
+        {% for tag in tags %}
+            <span class="badge badge-secondary">{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+{% endif %}

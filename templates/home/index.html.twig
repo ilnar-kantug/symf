@@ -8,13 +8,23 @@
         {% for post in posts %}
             <div class="card">
                 <div class="card-header">
-                    {{ post.title }}
+                    <div>{{ post.title }}</div>
+                    {% include 'partials/tags.html.twig' with {'tags': post.tags} %}
                 </div>
                 <div class="card-body">
                     {{ post.body }}
                 </div>
                 <div class="card-footer">
-                    <a href="#">Read more</a>
+                    <div>
+                        Author: {{ post.author.fullName }}
+                    </div>
+                    <div>
+                        Rating
+                    </div>
+                    <div>
+                        Comments count
+                    </div>
+                    <div class="read-more"><a href="#" class="btn btn-primary">Read more</a></div>
                 </div>
             </div>
         {% endfor %}

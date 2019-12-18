@@ -4,5 +4,16 @@
 .posts_home {
   .card {
     margin-bottom: 25px;
+
+    &-footer {
+      display: flex;
+      align-items: center;
+      div {
+        margin-left: 10px;
+      }
+      .read-more {
+        margin-left: auto
+      }
+    }
   }
 }
