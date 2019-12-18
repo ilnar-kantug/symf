@@ -22,7 +22,7 @@
                         Rating
                     </div>
                     <div>
-                        Comments count
+                        <span class="badge badge-primary">Comments: <span class="badge badge-secondary">{{ post.comments|length  }}</span></span>
                     </div>
                     <div class="read-more"><a href="{{ path('post_show', {id: post.id}) }}" class="btn btn-primary">Read more</a></div>
                 </div>
