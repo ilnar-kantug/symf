@@ -1,6 +1,8 @@
 @import "~bootstrap";
 @import "~font-awesome/scss/font-awesome";
 
-body {
-    background-color: lightgray;
+.posts_home {
+  .card {
+    margin-bottom: 25px;
+  }
 }
