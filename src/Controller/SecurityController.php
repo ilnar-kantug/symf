@@ -26,8 +26,7 @@ class SecurityController extends BaseController
         return $this->render('security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError()
-            ]
-        );
+            ]);
     }
 
     /**
@@ -55,7 +54,9 @@ class SecurityController extends BaseController
 
             $eventDispatcher->dispatch(new UserRegisteredEvent($user), UserRegisteredEvent::NAME);
 
-            return $this->redirectToRouteWithSuccess('Success! We sent a mail to you, so check it and confirm your email.');
+            return $this->redirectToRouteWithSuccess(
+                'Success! We sent a mail to you, so check it and confirm your email.'
+            );
         }
 
         return $this->render('security/sign_up.html.twig', [

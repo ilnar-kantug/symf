@@ -46,8 +46,10 @@ class BaseController extends AbstractController
         return $this->redirect($this->supposeBackUrl());
     }
 
-    protected function fallToRouteWithError(string $message = self::ERROR_MSG, string $route = 'app_login'): RedirectResponse
-    {
+    protected function fallToRouteWithError(
+        string $message = self::ERROR_MSG,
+        string $route = 'app_login'
+    ): RedirectResponse {
         return $this->fallWithError($message, $this->generateUrl($route));
     }
 
@@ -67,8 +69,10 @@ class BaseController extends AbstractController
         return $this->redirectWithSuccess($message, $this->supposeBackUrl());
     }
 
-    protected function redirectToRouteWithSuccess(string $message = self::SUCCESS_MSG, string $route = 'app_login'): RedirectResponse
-    {
+    protected function redirectToRouteWithSuccess(
+        string $message = self::SUCCESS_MSG,
+        string $route = 'app_login'
+    ): RedirectResponse {
         return $this->redirectWithSuccess($message, $this->generateUrl($route));
     }
 
