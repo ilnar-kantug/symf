@@ -23,16 +23,11 @@ class SecurityController extends BaseController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', [
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error' => $authenticationUtils->getLastAuthenticationError()
+            ]
+        );
     }
 
     /**
@@ -58,11 +53,9 @@ class SecurityController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Success! We sent a mail to you, so check it and confirm your email.');
-
             $eventDispatcher->dispatch(new UserRegisteredEvent($user), UserRegisteredEvent::NAME);
 
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRouteWithSuccess('Success! We sent a mail to you, so check it and confirm your email.');
         }
 
         return $this->render('security/sign_up.html.twig', [
@@ -76,21 +69,20 @@ class SecurityController extends BaseController
     public function confirm(Request $request, UserRepository $userRepository)
     {
         if (empty($token = $request->get('token'))) {
-            return $this->fallWithError('You have no token. Contact to admin.');
+            return $this->fallToRouteWithError('You have no token. Contact to admin.');
         }
         $user = $userRepository->findOneBy([
             User::ATTR_CONFIRM_TOKEN => $token
         ]);
 
         if ($user === null) {
-            return $this->fallWithError('No users for to this token. Contact to admin.');
+            return $this->fallToRouteWithError('No users for to this token. Contact to admin.');
         }
 
         $user->setConfirmToken(null);
         $this->getDoctrine()->getManager()->flush();
 
-        $this->addFlash('success', 'Success! Now you can login!');
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRouteWithSuccess('Success! Now you can login!');
     }
 
     /**

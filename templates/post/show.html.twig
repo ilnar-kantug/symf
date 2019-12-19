@@ -43,7 +43,14 @@
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div>
-                Add comment
+                <form action="{{ path('post_store') }}" method="post">
+                    <div class="form-group">
+                        <textarea name="body" class="form-control" placeholder="Add Comment Here" rows="3" required></textarea>
+                    </div>
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <input type="hidden" name="csrf" value="{{ csrf_token('comment_post') }}">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
             </div>
         {% endif %}
     </div>

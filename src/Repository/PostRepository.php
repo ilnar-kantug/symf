@@ -36,7 +36,8 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('published', Post::STATUS_PUBLISHED)
             ->join('post.author', 'author')
             ->join('post.tags', 'tags')
-            ->addSelect('author, tags');
+            ->join('post.comments', 'comments')
+            ->addSelect('author, tags, comments');
     }
 
     public function getPostWithComments(int $id): Post
