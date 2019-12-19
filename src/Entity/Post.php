@@ -61,10 +61,16 @@ class Post
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PostRating", mappedBy="Post", orphanRemoval=true)
+     */
+    private $postRatings;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->postRatings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,6 +189,37 @@ class Post
             // set the owning side to null (unless already changed)
             if ($comment->getPost() === $this) {
                 $comment->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PostRating[]
+     */
+    public function getPostRatings(): Collection
+    {
+        return $this->postRatings;
+    }
+
+    public function addPostRating(PostRating $postRating): self
+    {
+        if (!$this->postRatings->contains($postRating)) {
+            $this->postRatings[] = $postRating;
+            $postRating->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostRating(PostRating $postRating): self
+    {
+        if ($this->postRatings->contains($postRating)) {
+            $this->postRatings->removeElement($postRating);
+            // set the owning side to null (unless already changed)
+            if ($postRating->getPost() === $this) {
+                $postRating->setPost(null);
             }
         }
 
