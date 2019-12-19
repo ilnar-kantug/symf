@@ -5,10 +5,18 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRatingRepository")
+ * @Table(name="post_rating",
+ *    uniqueConstraints={
+ *        @UniqueConstraint(name="post_id_user_id_unique",
+ *            columns={"user_id", "post_id"})
+ *    }
+ * )
  */
 class PostRating
 {
