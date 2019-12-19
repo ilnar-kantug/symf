@@ -62,7 +62,7 @@ class Post
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PostRating", mappedBy="Post", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\PostRating", mappedBy="post", orphanRemoval=true)
      */
     private $postRatings;
 
