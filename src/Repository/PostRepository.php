@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Post;
@@ -16,6 +18,12 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class PostRepository extends ServiceEntityRepository
 {
+    const RELATIONS = [
+        'author',
+        'comments',
+        'tags'
+    ];
+
     /**
      * @var PaginatorInterface
      */
@@ -50,5 +58,29 @@ class PostRepository extends ServiceEntityRepository
             ->addSelect('comments, comment_author')
             ->getQuery()
             ->getSingleResult();
+    }
+
+    public function getRandPosts(int $limit = null, array $with = []): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->andWhere('p.status = ' . Post::STATUS_PUBLISHED)
+            ->orderBy('RAND()');
+
+        if ($limit !== null) {
+            $query->setMaxResults($limit);
+        }
+
+        //TODO extract to trait
+        if ($with) {
+            foreach ($with as $element) {
+                if (in_array($element, self::RELATIONS)) {
+                    $query
+                        ->join('p.' . $element, $alias = 'p_'. $element)
+                        ->addSelect($alias);
+                }
+            }
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

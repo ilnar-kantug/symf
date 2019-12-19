@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -10,6 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class PostRating
 {
+    public const LIKE_SCORE = 1;
+    public const DISLIKE_SCORE = -1;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
