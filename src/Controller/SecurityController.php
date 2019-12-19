@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends BaseController
 {
@@ -33,13 +32,12 @@ class SecurityController extends BaseController
      * @Route("/sign-up", name="app_sign_up")
      */
     public function register(
-        Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
         TokenGenerator $tokenGenerator,
         EventDispatcherInterface $eventDispatcher
     ): Response {
         $form = $this->createForm(UserForm::class);
-        $form->handleRequest($request);
+        $form->handleRequest($this->request);
 
         if ($form->isSubmitted() && $form->isValid() && $form[UserForm::AGREE_TERMS]->getData()) {
             $user = new User();
@@ -48,9 +46,8 @@ class SecurityController extends BaseController
             $user->setConfirmToken($tokenGenerator->getRandomSecureToken());
             $user->setPassword($passwordEncoder->encodePassword($user, $form[UserForm::PLAIN_PASSWORD]->getData()));
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $this->em->persist($user);
+            $this->em->flush();
 
             $eventDispatcher->dispatch(new UserRegisteredEvent($user), UserRegisteredEvent::NAME);
 
@@ -67,9 +64,9 @@ class SecurityController extends BaseController
     /**
      * @Route("/confirm", name="app_confirm_email")
      */
-    public function confirm(Request $request, UserRepository $userRepository)
+    public function confirm(UserRepository $userRepository)
     {
-        if (empty($token = $request->get('token'))) {
+        if (empty($token = $this->request->get('token'))) {
             return $this->fallToRouteWithError('You have no token. Contact to admin.');
         }
         $user = $userRepository->findOneBy([
@@ -81,7 +78,7 @@ class SecurityController extends BaseController
         }
 
         $user->setConfirmToken(null);
-        $this->getDoctrine()->getManager()->flush();
+        $this->em->flush();
 
         return $this->redirectToRouteWithSuccess('Success! Now you can login!');
     }
