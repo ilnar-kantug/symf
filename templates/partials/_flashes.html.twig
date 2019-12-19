@@ -1,0 +1,7 @@
+{% for message in app.flashes('success') %}
+    {% include 'partials/_flash.html.twig' with {'message': message, 'type': 'success'} %}
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    {% include 'partials/_flash.html.twig' with {'message': message, 'type': 'danger'} %}
+{% endfor %}
