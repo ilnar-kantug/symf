@@ -7,9 +7,11 @@ namespace App\Controller;
 use App\Constants\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 
 class BaseController extends AbstractController
 {
@@ -80,5 +82,15 @@ class BaseController extends AbstractController
     {
         $this->addFlash('success', $message);
         return $this->redirect($url);
+    }
+
+    protected function failedCsrf(string $csrfName): bool
+    {
+        return ! $this->isCsrfTokenValid($csrfName, $this->request->get('csrf'));
+    }
+
+    protected function fallBackJson(string $message = self::ERROR_MSG, int $status = Response::HTTP_BAD_REQUEST): JsonResponse
+    {
+        return $this->json($message, $status);
     }
 }
