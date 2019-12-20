@@ -225,4 +225,15 @@ class Post
 
         return $this;
     }
+
+    public function sumRating(): int
+    {
+        $sum = 0;
+        if (! $this->postRatings->isEmpty()) {
+            foreach ($this->postRatings as $postRating) {
+                $sum += $postRating->getScore();
+            }
+        }
+        return $sum;
+    }
 }

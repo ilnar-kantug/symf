@@ -3,7 +3,7 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
-    <div class="post-show">
+    <div class="post-show" data-is-auth="{% if app.user %}1{% else %}0{% endif %}">
         <h1>{{ post.title }}</h1>
         <div>
             {% include 'partials/tags.html.twig' with {'tags': post.tags} %}
@@ -13,11 +13,21 @@
             {{ post.body }}
         </div>
 
-        <div>
-            Author: {{ post.author.fullName }}
-        </div>
-        <div>
-            Rating
+        <div class="post-show-footer">
+            <div>
+                Author: {{ post.author.fullName }}
+            </div>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="post-show-footer-rating js-rate" data-rate="{{ rate }}" data-csrf="{{ csrf_token('rating') }}">
+                    <span class="post-show-footer-rating-arrows js-rate-dislike" title="dislike" data-route="{{ dislike_route }}"><i class="fa fa-arrow-down"></i></span>
+                    <span class="js-rate-score">{{ count_rating(post.postRatings) }}</span>
+                    <span class="post-show-footer-rating-arrows js-rate-like" title="like" data-route="{{ like_route }}"><i class="fa fa-arrow-up"></i></span>
+                </div>
+            {% else %}
+                <div class="post-show-footer-rating">
+                    <span>Rating: {{ count_rating(post.postRatings) }}</span>
+                </div>
+            {% endif %}
         </div>
 
         {% if post.comments %}

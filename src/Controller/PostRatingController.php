@@ -15,37 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostRatingController extends BaseController
 {
     /**
-     * @Route("/post/{post}/rate", methods={"GET"}, name="post_destroy_rate")
-     */
-    public function destroy(Post $post, PostRatingRepository $postRatingRepository)
-    {
-        //voter
-
-        if ($this->failedCsrf('destroy_rate')) {
-            return $this->fallBackJson('Ain\'t you trying to hack me?!');
-        }
-
-        $user = $this->getUser();
-        $rate = $postRatingRepository->findOneBy(['user' => $user, 'post' => $post]);
-
-        if (is_null($rate)) {
-            throw new \Exception('no rate');
-        }
-
-        $this->em->remove($rate);
-        $this->em->flush();
-
-        return $this->json('', Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Route("/post/{post}/like", methods={"GET"}, name="post_like")
+     * @Route("/post/{post}/like", methods={"POST"}, name="post_like")
      */
     public function like(Post $post, PostRatingRepository $postRatingRepository)
     {
         //voter
 
-        if ($this->failedCsrf('like_post')) {
+        if ($this->failedCsrf('rating')) {
             return $this->fallBackJson('Ain\'t you trying to hack me?!');
         }
 
@@ -66,17 +42,17 @@ class PostRatingController extends BaseController
 
         $this->em->flush();
 
-        return $this->json('', Response::HTTP_CREATED);
+        return $this->json(['rating' => $post->sumRating()], Response::HTTP_CREATED);
     }
 
     /**
-     * @Route("/post/{post}/dislike", methods={"GET"}, name="post_dislike")
+     * @Route("/post/{post}/dislike", methods={"POST"}, name="post_dislike")
      */
     public function disLike(Post $post, PostRatingRepository $postRatingRepository)
     {
         //voter
 
-        if ($this->failedCsrf('dislike_post')) {
+        if ($this->failedCsrf('rating')) {
             return $this->fallBackJson('Ain\'t you trying to hack me?!');
         }
 
@@ -97,7 +73,7 @@ class PostRatingController extends BaseController
 
         $this->em->flush();
 
-        return $this->json('', Response::HTTP_CREATED);
+        return $this->json(['rating' => $post->sumRating()], Response::HTTP_CREATED);
     }
 
 }
