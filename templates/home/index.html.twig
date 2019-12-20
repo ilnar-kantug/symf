@@ -19,7 +19,7 @@
                         Author: {{ post.author.fullName }}
                     </div>
                     <div>
-                        Rating
+                        Rating: {{ count_rating(post.postRatings) }}
                     </div>
                     <div>
                         <span class="badge badge-primary">Comments: <span class="badge badge-secondary">{{ post.comments|length  }}</span></span>

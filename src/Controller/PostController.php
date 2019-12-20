@@ -12,7 +12,7 @@ class PostController extends BaseController
     /**
      * @Route("/post/{id}", name="post_show")
      */
-    public function index(int $id, PostRepository $postRepository)
+    public function show(int $id, PostRepository $postRepository)
     {
         return $this->render('post/show.html.twig', [
             'post' => $postRepository->getPostWithComments($id),

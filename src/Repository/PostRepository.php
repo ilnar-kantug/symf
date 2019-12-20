@@ -43,9 +43,10 @@ class PostRepository extends ServiceEntityRepository
             ->andWhere('post.status = :published')
             ->setParameter('published', Post::STATUS_PUBLISHED)
             ->join('post.author', 'author')
-            ->join('post.tags', 'tags')
-            ->join('post.comments', 'comments')
-            ->addSelect('author, tags, comments');
+            ->leftJoin('post.tags', 'tags')
+            ->leftJoin('post.comments', 'comments')
+            ->leftJoin('post.postRatings', 'post_ratings')
+            ->addSelect('author, tags, comments, post_ratings');
     }
 
     public function getPostWithComments(int $id): Post
@@ -53,9 +54,10 @@ class PostRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('post')
             ->andWhere('post.id = :id')
             ->setParameter('id', $id)
-            ->join('post.comments', 'comments')
+            ->leftJoin('post.comments', 'comments')
+            ->leftJoin('post.postRatings', 'post_ratings')
             ->join('comments.author', 'comment_author')
-            ->addSelect('comments, comment_author')
+            ->addSelect('comments, comment_author, post_ratings')
             ->getQuery()
             ->getSingleResult();
     }
