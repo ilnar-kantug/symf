@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Post;
 use App\Entity\PostRating;
 use App\Repository\PostRatingRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,11 +19,10 @@ class PostRatingController extends BaseController
 {
     /**
      * @Route("/post/{post}/like", methods={"POST"}, name="post_like")
+     * @IsGranted("RATE", subject="post")
      */
     public function like(Post $post, PostRatingRepository $postRatingRepository)
     {
-        //voter
-
         if ($this->failedCsrf('rating')) {
             return $this->fallBackJson('Ain\'t you trying to hack me?!');
         }
@@ -47,11 +49,10 @@ class PostRatingController extends BaseController
 
     /**
      * @Route("/post/{post}/dislike", methods={"POST"}, name="post_dislike")
+     * @IsGranted("RATE", subject="post")
      */
     public function disLike(Post $post, PostRatingRepository $postRatingRepository)
     {
-        //voter
-
         if ($this->failedCsrf('rating')) {
             return $this->fallBackJson('Ain\'t you trying to hack me?!');
         }
