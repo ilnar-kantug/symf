@@ -22,8 +22,7 @@ class PostRatingFixture extends BaseFixture implements DependentFixtureInterface
         PostRepository $postRepository,
         UserRepository $userRepository,
         EntityManagerInterface $em
-    )
-    {
+    ) {
         $this->postRepository = $postRepository;
         $this->userRepository = $userRepository;
         $this->em = $em;

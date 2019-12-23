@@ -76,5 +76,4 @@ class PostRatingController extends BaseController
 
         return $this->json(['rating' => $post->sumRating()], Response::HTTP_CREATED);
     }
-
 }

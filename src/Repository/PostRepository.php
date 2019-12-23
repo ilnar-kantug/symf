@@ -18,7 +18,7 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class PostRepository extends ServiceEntityRepository
 {
-    const RELATIONS = [
+    public const RELATIONS = [
         'author',
         'comments',
         'tags'
@@ -77,7 +77,7 @@ class PostRepository extends ServiceEntityRepository
             foreach ($with as $element) {
                 if (in_array($element, self::RELATIONS)) {
                     $query
-                        ->join('p.' . $element, $alias = 'p_'. $element)
+                        ->join('p.' . $element, $alias = 'p_' . $element)
                         ->addSelect($alias);
                 }
             }

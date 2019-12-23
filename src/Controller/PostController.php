@@ -16,8 +16,12 @@ class PostController extends BaseController
     /**
      * @Route("/post/{id}", name="post_show")
      */
-    public function show(int $id, PostRepository $postRepository, PostRatingRepository $postRatingRepository, RouterInterface $router)
-    {
+    public function show(
+        int $id,
+        PostRepository $postRepository,
+        PostRatingRepository $postRatingRepository,
+        RouterInterface $router
+    ) {
         $post = $postRepository->getPostWithComments($id);
         $user = $this->getUser();
         $rate = null;

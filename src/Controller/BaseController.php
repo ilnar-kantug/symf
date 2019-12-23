@@ -89,8 +89,10 @@ class BaseController extends AbstractController
         return ! $this->isCsrfTokenValid($csrfName, $this->request->get('csrf'));
     }
 
-    protected function fallBackJson(string $message = self::ERROR_MSG, int $status = Response::HTTP_BAD_REQUEST): JsonResponse
-    {
+    protected function fallBackJson(
+        string $message = self::ERROR_MSG,
+        int $status = Response::HTTP_BAD_REQUEST
+    ): JsonResponse {
         return $this->json($message, $status);
     }
 }
