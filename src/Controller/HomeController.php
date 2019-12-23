@@ -19,7 +19,7 @@ class HomeController extends BaseController
         $posts = $paginator->paginate(
             $postRepository->getQueryForAllPublished(),
             $this->getPage(),
-            Paginator::PER_PAGE
+            Paginator::POST_PER_PAGE
         );
 
         return $this->render('home/index.html.twig', [

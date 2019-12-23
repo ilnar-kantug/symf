@@ -21,7 +21,7 @@ class ProfileController extends BaseController
         $posts = $paginator->paginate(
             $postRepository->getQueryForAuthUserPosts($user->getId()),
             $this->getPage(),
-            Paginator::PER_PAGE
+            Paginator::PROFILE_PER_PAGE
         );
 
         return $this->render('profile/index.html.twig', [

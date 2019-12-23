@@ -43,3 +43,31 @@
 .logged-as{
   margin-top: 2px;
 }
+
+.profile{
+  &-data{
+    border: 1px solid black;
+    &-rating{
+      &-good{
+        color: darkgreen;
+      }
+      &-bad{
+        color: red;
+      }
+    }
+  }
+  &-post-status{
+    &-0{
+      color: saddlebrown;
+    }
+    &-1{
+      color: orange;
+    }
+    &-2{
+      color: red;
+    }
+    &-3{
+      color: darkgreen;
+    }
+  }
+}

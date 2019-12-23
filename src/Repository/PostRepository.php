@@ -54,7 +54,8 @@ class PostRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('post')
             ->join('post.author', 'author')
             ->andWhere('post.author = :userId')
-            ->setParameter('userId', $userId);
+            ->setParameter('userId', $userId)
+            ->orderBy('post.createdAt', 'DESC');
     }
 
     public function getPostWithComments(int $id): Post
