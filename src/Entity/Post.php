@@ -126,6 +126,11 @@ class Post
         return $this;
     }
 
+    public function getStatusLabel()
+    {
+        return $this->status;
+    }
+
     /**
      * @return Collection|Tag[]
      */

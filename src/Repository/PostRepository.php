@@ -49,6 +49,14 @@ class PostRepository extends ServiceEntityRepository
             ->addSelect('author, tags, comments, post_ratings');
     }
 
+    public function getQueryForAuthUserPosts(int $userId): QueryBuilder
+    {
+        return $this->createQueryBuilder('post')
+            ->join('post.author', 'author')
+            ->andWhere('post.author = :userId')
+            ->setParameter('userId', $userId);
+    }
+
     public function getPostWithComments(int $id): Post
     {
         return $this->createQueryBuilder('post')

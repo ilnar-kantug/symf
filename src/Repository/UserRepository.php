@@ -50,15 +50,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $query->getQuery()->getResult();
     }
-    /*
-    public function findOneBySomeField($value): ?User
+
+    public function getUserRating(int $userId)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('user')
+            ->andWhere('user.id = :userId')
+            ->setParameter('userId', $userId)
+            ->leftJoin('user.posts', 'posts')
+            ->leftJoin('posts.postRatings', 'postsRatings')
+            ->select('SUM(postsRatings.score) AS rating')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getSingleResult();
     }
-    */
 }
