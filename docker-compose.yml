@@ -48,6 +48,12 @@ services:
       - ./docker/services/mysql/config-overrides.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/volums/database/:/var/lib/mysql
 
+  node:
+    image: node:12.14-alpine
+    volumes:
+      - ./:${DOCKER_VOLUME_CODE_PATH}
+    working_dir: ${DOCKER_VOLUME_CODE_PATH}
+
   redis:
     restart: on-failure
     build: ./docker/services/redis
