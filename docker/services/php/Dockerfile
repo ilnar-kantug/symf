@@ -11,7 +11,8 @@ RUN apt-get update \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
-RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install zip
 
 RUN printf "\n" | pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
