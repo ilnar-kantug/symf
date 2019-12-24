@@ -13,7 +13,7 @@ class PostVoter extends Voter
 {
     protected function supports($attribute, $subject): bool
     {
-        return in_array($attribute, ['EDIT_POST', 'REMOVE_POST'])
+        return in_array($attribute, ['CHANGE_POST', 'REMOVE_POST'])
             && $subject instanceof Post;
     }
 
@@ -26,7 +26,7 @@ class PostVoter extends Voter
 
         /** @var Post $subject */
         switch ($attribute) {
-            case 'EDIT_POST':
+            case 'CHANGE_POST':
                 if (
                         $subject->getAuthor()->getId() === $user->getId() &&
                         $subject->getStatus() === Post::STATUS_DRAFT

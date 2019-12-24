@@ -30,7 +30,7 @@
                     <td>
                         {% if post.status == 0 %}
                             <a class="btn btn-sm btn-info" href="{{ path('post_edit', {id: post.id}) }}">Edit</a>
-                            <a class="btn btn-sm btn-warning" href="{{ path('post_edit', {id: post.id}) }}">Publish</a>
+                            <a class="btn btn-sm btn-warning" href="{{ path('post_publish', {id: post.id}) }}">Publish</a>
                         {% elseif post.status == 1 %}
                             <span>-</span>
                         {% elseif post.status == 2 or post.status == 3 %}

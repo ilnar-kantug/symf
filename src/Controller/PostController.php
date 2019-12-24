@@ -49,7 +49,7 @@ class PostController extends BaseController
     /**
      * @Route("/post/{id}/edit", name="post_edit")
      * @Security("is_granted('ROLE_USER')")
-     * @IsGranted("EDIT_POST", subject="post")
+     * @IsGranted("CHANGE_POST", subject="post")
      */
     public function edit(Post $post)
     {
@@ -83,6 +83,22 @@ class PostController extends BaseController
 
         return $this->redirectToRouteWithSuccess(
             'Success! You removed the post!',
+            'profile'
+        );
+    }
+
+    /**
+     * @Route("/post/{id}/publish", name="post_publish")
+     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("CHANGE_POST", subject="post")
+     */
+    public function publish(Post $post)
+    {
+        $post->setStatus(Post::STATUS_ON_MODERATION);
+        $this->em->flush();
+
+        return $this->redirectToRouteWithSuccess(
+            'Success! You send post to publishing!',
             'profile'
         );
     }
