@@ -45,7 +45,7 @@ class PostRating
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="postRatings")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotNull()
      */
     private $post;

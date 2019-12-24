@@ -72,6 +72,22 @@ class PostController extends BaseController
     }
 
     /**
+     * @Route("/post/{id}/remove", name="post_remove")
+     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("REMOVE_POST", subject="post")
+     */
+    public function remove(Post $post)
+    {
+        $this->em->remove($post);
+        $this->em->flush();
+
+        return $this->redirectToRouteWithSuccess(
+            'Success! You removed the post!',
+            'profile'
+        );
+    }
+
+    /**
      * @Route("/post/{id}", name="post_show")
      */
     public function show(
