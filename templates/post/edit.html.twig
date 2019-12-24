@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block body %}
+    <div class="post-edit">
+        <h1>Edit Your Post</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                Edit
+            </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+{% endblock %}

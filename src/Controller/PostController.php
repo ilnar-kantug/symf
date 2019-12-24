@@ -11,6 +11,7 @@ use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PostController extends BaseController
 {
@@ -41,6 +42,31 @@ class PostController extends BaseController
         }
 
         return $this->render('post/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/post/{id}/edit", name="post_edit")
+     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("EDIT_POST", subject="post")
+     */
+    public function edit(Post $post)
+    {
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($this->request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($post);
+            $this->em->flush();
+
+            return $this->redirectToRouteWithSuccess(
+                'Success! You changed the post!',
+                'profile'
+            );
+        }
+
+        return $this->render('post/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

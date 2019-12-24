@@ -2,7 +2,7 @@
 
 return [
     '0' => 'Draft',
-    '1' => 'Checking',
+    '1' => 'On moderation',
     '2' => 'Declined',
     '3' => 'Published',
 ];

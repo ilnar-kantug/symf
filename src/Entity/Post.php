@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Post
 {
     public const STATUS_DRAFT = 0;
-    public const STATUS_CHECKING = 1;
+    public const STATUS_ON_MODERATION = 1;
     public const STATUS_DECLINED = 2;
     public const STATUS_PUBLISHED = 3;
 
