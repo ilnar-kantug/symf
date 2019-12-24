@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Comment;
+use App\Entity\Post;
+use App\Form\PostType;
 use App\Repository\PostRatingRepository;
 use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -13,6 +14,37 @@ use Symfony\Component\Routing\RouterInterface;
 
 class PostController extends BaseController
 {
+    /**
+     * @Route("/post/create", name="post_create")
+     * @Security("is_granted('ROLE_USER')")
+     */
+    public function create()
+    {
+        $form = $this->createForm(PostType::class);
+        $form->handleRequest($this->request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post = new Post();
+            $post->setTitle($form->getData()->getTitle());
+            $post->setBody($form->getData()->getBody());
+            $post->setPreview($form->getData()->getPreview());
+            $post->setAuthor($this->getUser());
+            $post->setCreatedAt(new \DateTime());
+            $post->setStatus(Post::STATUS_DRAFT);
+
+            $this->em->persist($post);
+            $this->em->flush();
+
+            return $this->redirectToRouteWithSuccess(
+                'Success! You created a post!',
+                'profile'
+            );
+        }
+
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     /**
      * @Route("/post/{id}", name="post_show")
      */
@@ -35,30 +67,5 @@ class PostController extends BaseController
             'dislike_route' => $router->generate('post_dislike', ['post' => $post->getId()]),
             'like_route' =>  $router->generate('post_like', ['post' => $post->getId()])
         ]);
-    }
-
-    /**
-     * @Route("/post", methods={"POST"}, name="post_store")
-     * @Security("is_granted('ROLE_USER')")
-     */
-    public function store(PostRepository $postRepository)
-    {
-        if (! $this->isCsrfTokenValid('comment_post', $this->request->get('csrf'))) {
-            return $this->fallBackWithError('Ain\'t you trying to hack me?!');
-        }
-        if (empty($body = $this->request->get('body'))) {
-            return $this->fallBackWithError('Empty comment!');
-        }
-
-        $comment = new Comment();
-        $comment->setPost($postRepository->find((int) $this->request->get('post_id')));
-        $comment->setAuthor($this->getUser());
-        $comment->setCreatedAt(new \DateTime());
-        $comment->setBody($body);
-
-        $this->em->persist($comment);
-        $this->em->flush();
-
-        return $this->redirectBackWithSuccess('Your comment is added!');
     }
 }

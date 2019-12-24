@@ -65,7 +65,7 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->leftJoin('post.comments', 'comments')
             ->leftJoin('post.postRatings', 'post_ratings')
-            ->join('comments.author', 'comment_author')
+            ->leftJoin('comments.author', 'comment_author')
             ->addSelect('comments, comment_author, post_ratings')
             ->getQuery()
             ->getSingleResult();

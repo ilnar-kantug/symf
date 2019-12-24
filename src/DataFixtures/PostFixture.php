@@ -28,6 +28,7 @@ class PostFixture extends BaseFixture implements DependentFixtureInterface
     {
         $post = new Post();
         $post->setTitle($this->faker->sentence);
+        $post->setPreview($this->faker->realText(290));
         $post->setBody($this->faker->realText());
         $post->setCreatedAt($this->faker->dateTimeThisMonth);
         $post->setStatus($status);
