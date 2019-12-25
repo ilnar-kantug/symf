@@ -6,18 +6,9 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(
- *     fields={"email"},
- *     message="I think you're already registered!"
- * )
- */
 class User implements UserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
@@ -29,52 +20,29 @@ class User implements UserInterface
     public const ATTR_CONFIRM_TOKEN = 'confirmToken';
     public const ATTR_FULL_NAME = 'fullName';
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="Please enter an email")
      * @Assert\Email()
      * @Assert\Length(max="180", minMessage="Your email is too long")
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="json")
-     */
     private $roles = [];
 
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $confirmToken;
 
     /**
-     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Please enter your full name")
      * @Assert\Length(max="255", minMessage="Your full name is too long")
      */
     private $fullName;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="author", orphanRemoval=true)
-     */
     private $posts;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author")
-     */
     private $comments;
 
     public function __construct()

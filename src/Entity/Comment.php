@@ -1,41 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
- */
 class Comment
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
     private $id;
 
-    /**
-     * @ORM\Column(type="text")
-     */
     private $body;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
     private $author;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments", cascade={"remove"})
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     */
     private $post;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
     private $createdAt;
 
     public function getId(): ?int

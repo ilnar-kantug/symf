@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="App\Repository\PostRatingRepository" name="App\Entity\PostRating" table="post_rating">
+    <unique-constraints>
+      <unique-constraint name="post_id_user_id_unique" columns="user_id,post_id"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="score" type="smallint" column="score" precision="0" scale="0" nullable="false"/>
+    <many-to-one field="user" target-entity="App\Entity\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_id" referenced-column-name="id" nullable=""/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="post" target-entity="App\Entity\Post" inversed-by="postRatings" fetch="LAZY">
+      <join-columns>
+        <join-column name="post_id" referenced-column-name="id" on-delete="CASCADE" nullable=""/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,16 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
- */
 class Post
 {
     public const STATUS_DRAFT = 0;
@@ -18,60 +15,32 @@ class Post
     public const STATUS_DECLINED = 2;
     public const STATUS_PUBLISHED = 3;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Please enter the title")
      * @Assert\Length(max="255", minMessage="The title is too long")
      */
     private $title;
 
     /**
-     * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Please enter the body of a post")
      */
     private $body;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
     private $status;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="posts")
-     */
     private $tags;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
-     * @ORM\JoinColumn(nullable=false)
-     */
     private $author;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true)
-     * @OrderBy({"createdAt" = "DESC"})
-     */
     private $comments;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PostRating", mappedBy="post", orphanRemoval=true)
-     */
     private $postRatings;
 
     /**
-     * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Please enter the preview")
      * @Assert\Length(max="300", minMessage="The preview is too long")
      */

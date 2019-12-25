@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="App\Repository\PostRepository" name="App\Entity\Post" table="post">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="title" type="string" column="title" length="255" precision="0" scale="0" nullable="false"/>
+    <field name="body" type="text" column="body" precision="0" scale="0" nullable="false"/>
+    <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0" nullable="false"/>
+    <field name="status" type="smallint" column="status" precision="0" scale="0" nullable="false"/>
+    <field name="preview" type="text" column="preview" precision="0" scale="0" nullable="false"/>
+    <one-to-many field="comments" target-entity="App\Entity\Comment" mapped-by="post" orphan-removal="true" fetch="LAZY">
+      <cascade>
+        <cascade-remove/>
+      </cascade>
+      <order-by>
+        <order-by-field name="createdAt" direction="DESC"/>
+      </order-by>
+    </one-to-many>
+    <one-to-many field="postRatings" target-entity="App\Entity\PostRating" mapped-by="post" orphan-removal="true" fetch="LAZY">
+      <cascade>
+        <cascade-remove/>
+      </cascade>
+    </one-to-many>
+    <many-to-one field="author" target-entity="App\Entity\User" inversed-by="posts" fetch="LAZY">
+      <join-columns>
+        <join-column name="author_id" referenced-column-name="id" nullable=""/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="tags" target-entity="App\Entity\Tag" inversed-by="posts" fetch="LAZY">
+      <join-table name="post_tag">
+        <join-columns>
+          <join-column name="post_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="tag_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>
