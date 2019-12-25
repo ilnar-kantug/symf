@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Constants\Paginator;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Services\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,14 +23,16 @@ class BaseController extends AbstractController
      */
     protected $request;
     /**
-     * @var EntityManagerInterface
+     * @var PostService
      */
-    protected $em;
+    protected $postService;
 
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em)
-    {
+    public function __construct(
+        RequestStack $requestStack,
+        PostService $postService
+    ) {
         $this->request = $requestStack->getCurrentRequest();
-        $this->em = $em;
+        $this->postService = $postService;
     }
 
     protected function getPage(): int
