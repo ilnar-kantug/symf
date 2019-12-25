@@ -45,5 +45,4 @@ class ProfileService
     {
         return $this->userRepository->getUserRating($userId);
     }
-
 }

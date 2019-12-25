@@ -36,7 +36,6 @@ class SecurityController extends BaseController
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted() && $form->isValid() && $form[UserForm::AGREE_TERMS]->getData()) {
-
             $userRegister->set(
                 $form[UserForm::EMAIL]->getData(),
                 $form[UserForm::FULL_NAME]->getData(),
