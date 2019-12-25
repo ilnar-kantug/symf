@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Security("is_granted('ROLE_USER')")
  */
-class PostRatingController extends BaseController
+class PostRatingController extends WebController
 {
     /**
      * @Route("/post/{post}/like", methods={"POST"}, name="post_like")

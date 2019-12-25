@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-class PostController extends BaseController
+class PostController extends WebController
 {
     /**
      * @Route("/post/create", name="post_create")

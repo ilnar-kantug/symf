@@ -10,7 +10,7 @@ use App\Services\CommentService;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class CommentController extends BaseController
+class CommentController extends WebController
 {
     /**
      * @Route("/post/{id}/comment", methods={"POST"}, name="post_comment_store")

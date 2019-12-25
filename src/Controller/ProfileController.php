@@ -8,7 +8,7 @@ use App\Services\ProfileService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProfileController extends BaseController
+class ProfileController extends WebController
 {
     /**
      * @Route("/profile", name="profile")

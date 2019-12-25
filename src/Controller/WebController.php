@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
-class BaseController extends AbstractController
+class WebController extends AbstractController
 {
     protected const SUCCESS_MSG = 'Success!';
     protected const ERROR_MSG = 'Something went wrong!';

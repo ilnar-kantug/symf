@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Services\HomeService;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends BaseController
+class HomeController extends WebController
 {
     /**
      * @Route("/", name="home")
