@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Event\UserRegisteredEvent;
+use App\DTO\UserRegister;
+use App\Exceptions\SecurityException;
 use App\Form\UserRegisterFormType as UserForm;
-use App\Repository\UserRepository;
-use App\Security\TokenGenerator;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Services\SecurityService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends BaseController
@@ -32,24 +29,21 @@ class SecurityController extends BaseController
      * @Route("/sign-up", name="app_sign_up")
      */
     public function register(
-        UserPasswordEncoderInterface $passwordEncoder,
-        TokenGenerator $tokenGenerator,
-        EventDispatcherInterface $eventDispatcher
+        UserRegister $userRegister,
+        SecurityService $service
     ): Response {
         $form = $this->createForm(UserForm::class);
         $form->handleRequest($this->request);
 
         if ($form->isSubmitted() && $form->isValid() && $form[UserForm::AGREE_TERMS]->getData()) {
-            $user = new User();
-            $user->setEmail($form[UserForm::EMAIL]->getData());
-            $user->setFullName($form[UserForm::FULL_NAME]->getData());
-            $user->setConfirmToken($tokenGenerator->getRandomSecureToken());
-            $user->setPassword($passwordEncoder->encodePassword($user, $form[UserForm::PLAIN_PASSWORD]->getData()));
 
-            $this->em->persist($user);
-            $this->em->flush();
+            $userRegister->set(
+                $form[UserForm::EMAIL]->getData(),
+                $form[UserForm::FULL_NAME]->getData(),
+                $form[UserForm::PLAIN_PASSWORD]->getData()
+            );
 
-            $eventDispatcher->dispatch(new UserRegisteredEvent($user), UserRegisteredEvent::NAME);
+            $service->register($userRegister);
 
             return $this->redirectToRouteWithSuccess(
                 'Success! We sent a mail to you, so check it and confirm your email.'
@@ -64,21 +58,17 @@ class SecurityController extends BaseController
     /**
      * @Route("/confirm", name="app_confirm_email")
      */
-    public function confirm(UserRepository $userRepository)
+    public function confirm(SecurityService $service)
     {
         if (empty($token = $this->request->get('token'))) {
             return $this->fallToRouteWithError('You have no token. Contact to admin.');
         }
-        $user = $userRepository->findOneBy([
-            User::ATTR_CONFIRM_TOKEN => $token
-        ]);
 
-        if ($user === null) {
-            return $this->fallToRouteWithError('No users for to this token. Contact to admin.');
+        try {
+            $service->confirm($token);
+        } catch (SecurityException $exception) {
+            return $this->fallToRouteWithError($exception->getMessage());
         }
-
-        $user->setConfirmToken(null);
-        $this->em->flush();
 
         return $this->redirectToRouteWithSuccess('Success! Now you can login!');
     }
