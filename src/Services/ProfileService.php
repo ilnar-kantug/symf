@@ -25,8 +25,11 @@ class ProfileService
      */
     private $userRepository;
 
-    public function __construct(PostRepository $postRepository, PaginatorInterface $paginator, UserRepository $userRepository)
-    {
+    public function __construct(
+        PostRepository $postRepository,
+        PaginatorInterface $paginator,
+        UserRepository $userRepository
+    ) {
         $this->postRepository = $postRepository;
         $this->paginator = $paginator;
         $this->userRepository = $userRepository;
