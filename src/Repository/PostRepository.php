@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Repository\Concerns\WithRelations;
+use App\Repository\Contracts\EagerLoadRelations;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
@@ -16,13 +18,9 @@ use Knp\Component\Pager\PaginatorInterface;
  * @method Post[]    findAll()
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PostRepository extends ServiceEntityRepository
+class PostRepository extends ServiceEntityRepository implements EagerLoadRelations
 {
-    public const RELATIONS = [
-        'author',
-        'comments',
-        'tags'
-    ];
+    use WithRelations;
 
     /**
      * @var PaginatorInterface
@@ -39,14 +37,13 @@ class PostRepository extends ServiceEntityRepository
 
     public function getQueryForAllPublished(): QueryBuilder
     {
-        return $this->createQueryBuilder('post')
+        $query = $this->createQueryBuilder($alias = 'post')
             ->andWhere('post.status = :published')
-            ->setParameter('published', Post::STATUS_PUBLISHED)
-            ->join('post.author', 'author')
-            ->leftJoin('post.tags', 'tags')
-            ->leftJoin('post.comments', 'comments')
-            ->leftJoin('post.postRatings', 'post_ratings')
-            ->addSelect('author, tags, comments, post_ratings');
+            ->setParameter('published', Post::STATUS_PUBLISHED);
+
+        $this->fetchRelations(['author', 'tags', 'comments', 'postRatings'], $alias, $query);
+
+        return $query;
     }
 
     public function getQueryForAuthUserPosts(int $userId): QueryBuilder
@@ -71,9 +68,9 @@ class PostRepository extends ServiceEntityRepository
             ->getSingleResult();
     }
 
-    public function getRandPosts(int $limit = null, array $with = []): array
+    public function getRandPosts(int $limit = null, array $withRelations = []): array
     {
-        $query = $this->createQueryBuilder('p')
+        $query = $this->createQueryBuilder($alias = 'p')
             ->andWhere('p.status = ' . Post::STATUS_PUBLISHED)
             ->orderBy('RAND()');
 
@@ -81,17 +78,20 @@ class PostRepository extends ServiceEntityRepository
             $query->setMaxResults($limit);
         }
 
-        //TODO extract to trait
-        if ($with) {
-            foreach ($with as $element) {
-                if (in_array($element, self::RELATIONS)) {
-                    $query
-                        ->join('p.' . $element, $alias = 'p_' . $element)
-                        ->addSelect($alias);
-                }
-            }
+        if ($withRelations) {
+            $this->fetchRelations($withRelations, $alias, $query);
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    public function getRelationsNames(): array
+    {
+        return [
+            'author',
+            'comments',
+            'postRatings',
+            'tags'
+        ];
     }
 }
