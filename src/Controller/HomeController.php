@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Constants\Paginator;
-use App\Repository\PostRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Services\HomeService;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends BaseController
@@ -14,16 +12,10 @@ class HomeController extends BaseController
     /**
      * @Route("/", name="home")
      */
-    public function index(PostRepository $postRepository, PaginatorInterface $paginator)
+    public function index(HomeService $service)
     {
-        $posts = $paginator->paginate(
-            $postRepository->getQueryForAllPublished(),
-            $this->getPage(),
-            Paginator::POST_PER_PAGE
-        );
-
         return $this->render('home/index.html.twig', [
-            'posts' => $posts,
+            'posts' => $service->getPublishedPosts($this->getPage()),
         ]);
     }
 }
