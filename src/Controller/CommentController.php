@@ -7,13 +7,11 @@ namespace App\Controller;
 use App\DTO\Comment;
 use App\Entity\Post;
 use App\Services\CommentService;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CommentController extends WebController
 {
     /**
-     * @Route("/post/{id}/comment", methods={"POST"}, name="post_comment_store")
      * @Security("is_granted('ROLE_USER')")
      */
     public function store(Post $post, CommentService $service, Comment $commentDTO)

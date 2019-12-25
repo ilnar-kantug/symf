@@ -9,17 +9,14 @@ use App\Entity\PostRating;
 use App\DTO\PostRating as PostRatingDTO;
 use App\Services\PostRatingService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Security("is_granted('ROLE_USER')")
+ * @IsGranted("ROLE_USER")
  */
 class PostRatingController extends WebController
 {
     /**
-     * @Route("/post/{post}/like", methods={"POST"}, name="post_like")
      * @IsGranted("RATE", subject="post")
      */
     public function like(Post $post, PostRatingService $service, PostRatingDTO $postRating)
@@ -36,7 +33,6 @@ class PostRatingController extends WebController
     }
 
     /**
-     * @Route("/post/{post}/dislike", methods={"POST"}, name="post_dislike")
      * @IsGranted("RATE", subject="post")
      */
     public function disLike(Post $post, PostRatingService $service, PostRatingDTO $postRating)

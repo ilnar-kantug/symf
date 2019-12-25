@@ -1,3 +1,61 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+profile:
+    path: /profile
+    controller: App\Controller\ProfileController::index
+
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_sign_up:
+    path: /sign-up
+    controller: App\Controller\SecurityController::register
+
+app_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+app_confirm_email:
+    path: /confirm
+    controller: App\Controller\SecurityController::confirm
+
+post_comment_store:
+    path: /post/{id}/comment
+    controller: App\Controller\CommentController::store
+    methods: POST
+
+post_like:
+    path: /post/{post}/like
+    controller: App\Controller\PostRatingController::like
+    methods: POST
+
+post_dislike:
+    path: /post/{post}/dislike
+    controller: App\Controller\PostRatingController::disLike
+    methods: POST
+
+post_create:
+    path: /post/create
+    controller: App\Controller\PostController::create
+
+post_edit:
+    path: /post/{id}/edit
+    controller: App\Controller\PostController::edit
+
+post_remove:
+    path: /post/{id}/remove
+    controller: App\Controller\PostController::remove
+
+post_publish:
+    path: /post/{id}/publish
+    controller: App\Controller\PostController::publish
+
+post_show:
+    path: /post/{id}
+    controller: App\Controller\PostController::show
+
+
+

@@ -6,12 +6,10 @@ namespace App\Controller;
 
 use App\Services\ProfileService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends WebController
 {
     /**
-     * @Route("/profile", name="profile")
      * @IsGranted("ROLE_USER")
      */
     public function index(ProfileService $service)

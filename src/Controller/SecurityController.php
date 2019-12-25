@@ -9,14 +9,10 @@ use App\Exceptions\SecurityException;
 use App\Form\UserRegisterFormType as UserForm;
 use App\Services\SecurityService;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends WebController
 {
-    /**
-     * @Route("/login", name="app_login")
-     */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         return $this->render('security/login.html.twig', [
@@ -25,9 +21,6 @@ class SecurityController extends WebController
             ]);
     }
 
-    /**
-     * @Route("/sign-up", name="app_sign_up")
-     */
     public function register(
         UserRegister $userRegister,
         SecurityService $service
@@ -54,9 +47,6 @@ class SecurityController extends WebController
         ]);
     }
 
-    /**
-     * @Route("/confirm", name="app_confirm_email")
-     */
     public function confirm(SecurityService $service)
     {
         if (empty($token = $this->request->get('token'))) {
@@ -72,9 +62,6 @@ class SecurityController extends WebController
         return $this->redirectToRouteWithSuccess('Success! Now you can login!');
     }
 
-    /**
-     * @Route("/logout", name="app_logout")
-     */
     public function logout()
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');

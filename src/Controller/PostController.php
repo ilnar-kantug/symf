@@ -7,16 +7,13 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\DTO\Post as PostDTO;
 use App\Form\PostType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PostController extends WebController
 {
     /**
-     * @Route("/post/create", name="post_create")
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      */
     public function create(PostDTO $post)
     {
@@ -44,8 +41,7 @@ class PostController extends WebController
     }
 
     /**
-     * @Route("/post/{id}/edit", name="post_edit")
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      * @IsGranted("CHANGE_POST", subject="post")
      */
     public function edit(Post $post)
@@ -68,8 +64,7 @@ class PostController extends WebController
     }
 
     /**
-     * @Route("/post/{id}/remove", name="post_remove")
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      * @IsGranted("REMOVE_POST", subject="post")
      */
     public function remove(Post $post)
@@ -83,8 +78,7 @@ class PostController extends WebController
     }
 
     /**
-     * @Route("/post/{id}/publish", name="post_publish")
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      * @IsGranted("CHANGE_POST", subject="post")
      */
     public function publish(Post $post)
@@ -97,9 +91,6 @@ class PostController extends WebController
         );
     }
 
-    /**
-     * @Route("/post/{id}", name="post_show")
-     */
     public function show(
         int $id,
         RouterInterface $router
