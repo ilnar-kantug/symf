@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class="d-flex flex-column h-100">
+        <header>
+            {% block nav %}{% endblock %}
+        </header>
+
+        <main role="main" class="flex-shrink-0">
+            <div class="container">
+                {% include 'partials/_flashes.html.twig' %}
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+
+        <footer class="footer mt-auto pt-5">
+            <div class="container text-center">
+                <span>©noveo {{ "now"|date("d-m-Y") }}</span>
+            </div>
+        </footer>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html>
