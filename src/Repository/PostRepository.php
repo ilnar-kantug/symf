@@ -85,6 +85,16 @@ class PostRepository extends ServiceEntityRepository implements EagerLoadRelatio
         return $query->getQuery()->getResult();
     }
 
+    public function getQueryForAllNotDraft(): QueryBuilder
+    {
+        return $this->createQueryBuilder('post')
+            ->andWhere('post.status <> :published')
+            ->setParameter('published', Post::STATUS_DRAFT)
+            ->join('post.author', 'author')
+            ->addSelect('author')
+            ->orderBy('post.id', 'DESC');
+    }
+
     public function getRelationsNames(): array
     {
         return [

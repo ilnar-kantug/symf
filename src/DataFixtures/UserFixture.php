@@ -30,6 +30,7 @@ class UserFixture extends BaseFixture
     {
         $this->createConfirmedUsers(20);
         $this->createUnConfirmedUsers();
+        $this->createAdminUser();
         $manager->flush();
     }
 
@@ -53,6 +54,18 @@ class UserFixture extends BaseFixture
             $user->setConfirmToken($this->tokenGenerator->getRandomSecureToken());
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
             $user->setRoles([User::ROLE_USER]);
+            $user->setFullName($this->faker->name);
+            return $user;
+        });
+    }
+
+    private function createAdminUser(): void
+    {
+        $this->create(function () {
+            $user = new User();
+            $user->setEmail($this->faker->unique()->email);
+            $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
+            $user->setRoles([User::ROLE_ADMIN]);
             $user->setFullName($this->faker->name);
             return $user;
         });

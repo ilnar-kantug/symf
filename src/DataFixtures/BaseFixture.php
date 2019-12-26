@@ -98,4 +98,9 @@ abstract class BaseFixture extends Fixture
 
         return $references;
     }
+
+    protected function create(callable $factory): void
+    {
+        $this->manager->persist($factory());
+    }
 }

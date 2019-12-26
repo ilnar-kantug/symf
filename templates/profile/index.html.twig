@@ -5,6 +5,8 @@
 {% block body %}
     <div class="profile">
 
+        <a class="btn btn-md btn-info mt-3" href="{{ path('post_create') }}">Create New Post</a>
+
         <div class="profile-data my-3 p-2">
             <div>My email: {{ user.email }}</div>
             <div>My name: {{ user.fullName }}</div>

@@ -57,5 +57,6 @@ post_show:
     path: /post/{id}
     controller: App\Controller\PostController::show
 
-
-
+admin_post_index:
+    path: /admin
+    controller: App\Controller\Admin\PostController::index
