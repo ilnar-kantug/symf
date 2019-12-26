@@ -69,3 +69,7 @@ admin_post_update:
     path: /admin/post/{id}/update
     controller: App\Controller\Admin\PostController::update
     methods: POST
+
+admin_users_list:
+    path: /admin/users
+    controller: App\Controller\Admin\UserController::index

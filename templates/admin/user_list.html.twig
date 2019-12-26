@@ -1,0 +1,32 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}Users List{% endblock %}
+
+{% block body %}
+    <div class="admin-users_list">
+        <h2>Users</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Email</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td> - </td>
+                    <td> - </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            {{ knp_pagination_render(users) }}
+        </div>
+    </div>
+{% endblock %}
