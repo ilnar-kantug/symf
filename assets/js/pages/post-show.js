@@ -1,4 +1,4 @@
-const $ = require('jquery');
+import $ from 'jquery'
 
 $(function() {
     const post_show = $('.post-show')

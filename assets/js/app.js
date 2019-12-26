@@ -10,4 +10,6 @@ require('../css/app.scss');
 
 require('bootstrap');
 
+require('./pages/sign-up');
+
 require('./pages/post-show');
