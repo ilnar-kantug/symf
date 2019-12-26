@@ -60,3 +60,12 @@ post_show:
 admin_post_index:
     path: /admin
     controller: App\Controller\Admin\PostController::index
+
+admin_post_edit:
+    path: /admin/post/{id}/edit
+    controller: App\Controller\Admin\PostController::edit
+
+admin_post_update:
+    path: /admin/post/{id}/update
+    controller: App\Controller\Admin\PostController::update
+    methods: POST

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block body %}
+    <div class="admin-post-edit">
+        <h1 class="my-3">Edit Post #{{ post.id }}</h1>
+        <div>
+            <h3>Title: </h3>
+            <div>{{ post.title }}</div>
+        </div>
+        <div>
+            <h3>Preview: </h3>
+            <div>{{ post.preview }}</div>
+        </div>
+        <div>
+            <h3>Tags: </h3>
+            {% include 'partials/tags.html.twig' with {'tags': post.tags} %}
+        </div>
+        <div>
+            <h3>Body: </h3>
+            <div>{{ post.body|purify }}</div>
+        </div>
+        <div>
+            <h3>Change Status:</h3>
+            <form action="{{ path('admin_post_update', {id: post.id}) }}" method="post">
+                <div class="form-group">
+                    <select class="form-control" name="status">
+                        {% for status in statuses %}
+                            <option value="{{ status }}" {% if status == post.status %}selected{% endif %}>{{ status|trans({}, 'post_status') }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Edit
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

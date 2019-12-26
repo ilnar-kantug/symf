@@ -23,7 +23,7 @@
                     <td>{{ post.title }}</td>
                     <td class="profile-post-status-{{ post.status }}">{{ post.status|trans({}, 'post_status') }}</td>
                     <td>
-                        <a class="btn btn-sm btn-info" href="#">Edit</a>
+                        <a class="btn btn-sm btn-info" href="{{ path('admin_post_edit', {id: post.id}) }}">Edit</a>
                     </td>
                 </tr>
             {% endfor %}

@@ -15,6 +15,13 @@ class Post
     public const STATUS_DECLINED = 2;
     public const STATUS_PUBLISHED = 3;
 
+    public const STATUSES = [
+        self::STATUS_DRAFT,
+        self::STATUS_ON_MODERATION,
+        self::STATUS_DECLINED,
+        self::STATUS_PUBLISHED,
+    ];
+
     private $id;
 
     /**
