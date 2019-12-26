@@ -24,9 +24,9 @@
                         {% if user.status == 0 or user.isAdmin %}
                             -
                         {% elseif user.status == 1 %}
-                            <a href="#">Block</a>
+                            <a href="{{ path('admin_user_ban', {id: user.id}) }}">Block</a>
                         {% elseif user.status == 2%}
-                            <a href="#">Activate</a>
+                            <a href="{{ path('admin_user_activate', {id: user.id}) }}">Activate</a>
                         {% endif %}
                     </td>
                 </tr>

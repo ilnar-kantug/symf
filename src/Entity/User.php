@@ -171,6 +171,11 @@ class User implements UserInterface
         return $this;
     }
 
+    public function isActive(): bool
+    {
+        return $this->getStatus() === self::STATUS_ACTIVE;
+    }
+
     public function isNotConfirmed(): bool
     {
         return $this->getStatus() === self::STATUS_NOT_VERIFIED;

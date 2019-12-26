@@ -73,3 +73,11 @@ admin_post_update:
 admin_users_list:
     path: /admin/users
     controller: App\Controller\Admin\UserController::index
+
+admin_user_ban:
+    path: /admin/user/{id}/ban
+    controller: App\Controller\Admin\UserController::ban
+
+admin_user_activate:
+    path: /admin/user/{id}/activate
+    controller: App\Controller\Admin\UserController::activate
