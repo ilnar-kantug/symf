@@ -17,8 +17,14 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
-        if (!$identity->isEnabled()) {
+        if ($identity->isNotConfirmed()) {
             $exception = new AccountException('User account is not confirmed.');
+            $exception->setUser($identity);
+            throw $exception;
+        }
+
+        if ($identity->isBanned()) {
+            $exception = new AccountException('Account is banned.');
             $exception->setUser($identity);
             throw $exception;
         }

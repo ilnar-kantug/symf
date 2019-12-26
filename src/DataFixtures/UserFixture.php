@@ -42,6 +42,7 @@ class UserFixture extends BaseFixture
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
             $user->setRoles([User::ROLE_USER]);
             $user->setFullName($this->faker->name);
+            $user->setStatus(User::STATUS_ACTIVE);
             return $user;
         });
     }
@@ -55,6 +56,7 @@ class UserFixture extends BaseFixture
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
             $user->setRoles([User::ROLE_USER]);
             $user->setFullName($this->faker->name);
+            $user->setStatus(User::STATUS_NOT_VERIFIED);
             return $user;
         });
     }
@@ -67,6 +69,7 @@ class UserFixture extends BaseFixture
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
             $user->setRoles([User::ROLE_ADMIN]);
             $user->setFullName($this->faker->name);
+            $user->setStatus(User::STATUS_ACTIVE);
             return $user;
         });
     }

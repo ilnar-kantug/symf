@@ -19,8 +19,16 @@
                 <tr>
                     <td>{{ user.id }}</td>
                     <td>{{ user.email }}</td>
-                    <td> - </td>
-                    <td> - </td>
+                    <td>{{ user.status|trans({}, 'user_status') }}</td>
+                    <td>
+                        {% if user.status == 0 or user.isAdmin %}
+                            -
+                        {% elseif user.status == 1 %}
+                            <a href="#">Block</a>
+                        {% elseif user.status == 2%}
+                            <a href="#">Activate</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

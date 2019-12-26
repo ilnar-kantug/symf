@@ -58,6 +58,7 @@ class SecurityService
         $user->setFullName($userRegister->getFullName());
         $user->setConfirmToken($this->tokenGenerator->getRandomSecureToken());
         $user->setPassword($this->passwordEncoder->encodePassword($user, $userRegister->getPlainPassword()));
+        $user->setStatus(User::STATUS_NOT_VERIFIED);
 
         $this->em->persist($user);
         $this->em->flush();
@@ -75,6 +76,7 @@ class SecurityService
             throw new SecurityException('No users for to this token. Contact to admin.');
         }
 
+        $user->setStatus(User::STATUS_ACTIVE);
         $user->setConfirmToken(null);
         $this->em->flush();
     }

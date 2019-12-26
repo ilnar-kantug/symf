@@ -8,6 +8,7 @@
     <field name="roles" type="json" column="roles" precision="0" scale="0" nullable="false"/>
     <field name="password" type="string" column="password" precision="0" scale="0" nullable="false"/>
     <field name="confirmToken" type="string" column="confirm_token" length="255" precision="0" scale="0" nullable="true"/>
+    <field name="status" type="smallint" column="status" precision="0" scale="0" nullable="false"/>
     <field name="fullName" type="string" column="full_name" length="255" precision="0" scale="0" nullable="false"/>
     <one-to-many field="posts" target-entity="App\Entity\Post" mapped-by="author" orphan-removal="true" fetch="LAZY">
       <cascade>

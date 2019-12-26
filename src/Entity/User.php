@@ -14,6 +14,17 @@ class User implements UserInterface
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
 
+    public const STATUS_NOT_VERIFIED = 0;
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_BANNED = 2;
+
+    public const STATUSES = [
+        self::STATUS_NOT_VERIFIED,
+        self::STATUS_ACTIVE,
+        self::STATUS_BANNED
+    ];
+
+
     public const ATTR_EMAIL = 'email';
     public const ATTR_ROLES = 'roles';
     public const ATTR_PASSWORD = 'password';
@@ -35,6 +46,8 @@ class User implements UserInterface
 
     private $confirmToken;
 
+    private $status;
+
     /**
      * @Assert\NotBlank(message="Please enter your full name")
      * @Assert\Length(max="255", minMessage="Your full name is too long")
@@ -54,6 +67,18 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -88,6 +113,11 @@ class User implements UserInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array(self::ROLE_ADMIN, $this->getRoles());
     }
 
     public function setRoles(array $roles): self
@@ -141,9 +171,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function isEnabled(): bool
+    public function isNotConfirmed(): bool
     {
-        return empty($this->confirmToken);
+        return $this->getStatus() === self::STATUS_NOT_VERIFIED;
+    }
+
+    public function isBanned(): bool
+    {
+        return $this->getStatus() === self::STATUS_BANNED;
     }
 
     public function getFullName(): ?string
