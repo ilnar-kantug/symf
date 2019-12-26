@@ -26,7 +26,7 @@ class Post
 
     /**
      * @Assert\NotBlank(message="Please enter the title")
-     * @Assert\Length(max="255", minMessage="The title is too long")
+     * @Assert\Length(max="255", maxMessage="The title is too long")
      */
     private $title;
 
@@ -49,7 +49,7 @@ class Post
 
     /**
      * @Assert\NotBlank(message="Please enter the preview")
-     * @Assert\Length(max="300", minMessage="The preview is too long")
+     * @Assert\Length(max="300", maxMessage="The preview is too long")
      */
     private $preview;
 

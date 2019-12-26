@@ -36,7 +36,7 @@ class User implements UserInterface
     /**
      * @Assert\NotBlank(message="Please enter an email")
      * @Assert\Email()
-     * @Assert\Length(max="180", minMessage="Your email is too long")
+     * @Assert\Length(max="180", maxMessage="Your email is too long")
      */
     private $email;
 
@@ -50,7 +50,7 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank(message="Please enter your full name")
-     * @Assert\Length(max="255", minMessage="Your full name is too long")
+     * @Assert\Length(max="255", maxMessage="Your full name is too long")
      */
     private $fullName;
 
