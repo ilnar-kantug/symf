@@ -1,6 +1,8 @@
 @import "~bootstrap";
 @import "~font-awesome/scss/font-awesome";
 @import "~select2";
+@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
+
 
 .posts_home {
   .card {
@@ -70,5 +72,22 @@
     &-3{
       color: darkgreen;
     }
+  }
+}
+.admin-dashboard{
+  & .select2-width{
+    min-width: 300px;
+  }
+  & .form-inline{
+    justify-content: space-between !important;
+  }
+  & .select2-container--default .select2-selection--single{
+    height: 38px !important;
+  }
+  & .select2-container--default .select2-selection--single .select2-selection__arrow{
+    top: 5px !important;
+  }
+  & .select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: 33px !important;
   }
 }

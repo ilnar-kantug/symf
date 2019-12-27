@@ -12,8 +12,12 @@ require('bootstrap');
 
 require('select2');
 
+require('bootstrap-datepicker');
+
 require('./pages/sign-up');
 
 require('./pages/post-show');
 
 require('./pages/admin-users-list');
+
+require('./pages/admin-dashboard');

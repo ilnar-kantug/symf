@@ -16,6 +16,7 @@ class PostController extends WebController
     {
         return $this->render('admin/post_index.html.twig', [
             'posts' => $service->getNotDraftPosts($this->getPage()),
+            'statuses' => Post::STATUSES
         ]);
     }
 
