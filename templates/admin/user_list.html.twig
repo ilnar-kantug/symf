@@ -3,8 +3,19 @@
 {% block title %}Users List{% endblock %}
 
 {% block body %}
-    <div class="admin-users_list">
+    <div class="admin-users-list">
         <h2>Users</h2>
+        <div>
+            <form>
+                <div class="form-group">
+                    <select name="userId" id="select2-users-email" class="select2 form-control" data-autocomplete-url="{{ path('admin_user_search') }}"></select>
+
+                    <button class="btn btn-sm btn-primary" type="submit">
+                        Search
+                    </button>
+                </div>
+            </form>
+        </div>
         <table class="table table-striped">
             <thead>
             <tr>

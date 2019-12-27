@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Services\Admin\UserService;
 use App\Services\PostService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,7 @@ class UserController extends WebController
     public function index(): Response
     {
         return $this->render('admin/user_list.html.twig', [
-            'users' => $this->service->getUsers($this->getPage()),
+            'users' => $this->service->getUsers($this->getPage(), $this->request->get('userId')),
         ]);
     }
 
@@ -55,5 +56,13 @@ class UserController extends WebController
         }
         $this->service->activateUser($user);
         return $this->redirectBackWithSuccess('User is activated');
+    }
+
+    public function search(): JsonResponse
+    {
+        if (is_null($email = $this->request->get('email'))) {
+            return $this->json('');
+        }
+        return $this->json($this->service->search($email));
     }
 }

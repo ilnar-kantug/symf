@@ -36,10 +36,10 @@ class UserService
         $this->em = $em;
     }
 
-    public function getUsers(int $page): PaginationInterface
+    public function getUsers(int $page, ?string $userId): PaginationInterface
     {
         return $this->paginator->paginate(
-            $this->userRepository->findBy([], ['id' => 'DESC']),
+            $this->userRepository->findBy(is_null($userId) ? [] : ['id' => (int) $userId], ['id' => 'DESC']),
             $page,
             Paginator::USER_PER_PAGE
         );
@@ -58,5 +58,10 @@ class UserService
         $user->setConfirmToken(null);
         $this->em->persist($user);
         $this->em->flush();
+    }
+
+    public function search(string $email): array
+    {
+        return $this->userRepository->searchLikeByEmail($email);
     }
 }

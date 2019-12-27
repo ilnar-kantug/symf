@@ -81,3 +81,8 @@ admin_user_ban:
 admin_user_activate:
     path: /admin/user/{id}/activate
     controller: App\Controller\Admin\UserController::activate
+
+admin_user_search:
+    path: /admin/search
+    controller: App\Controller\Admin\UserController::search
+    methods: POST
