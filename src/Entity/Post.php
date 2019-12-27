@@ -10,10 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Post
 {
-    public const STATUS_DRAFT = 0;
-    public const STATUS_ON_MODERATION = 1;
-    public const STATUS_DECLINED = 2;
-    public const STATUS_PUBLISHED = 3;
+    public const STATUS_DRAFT = 1;
+    public const STATUS_ON_MODERATION = 2;
+    public const STATUS_DECLINED = 3;
+    public const STATUS_PUBLISHED = 4;
 
     public const STATUSES = [
         self::STATUS_DRAFT,

@@ -7,24 +7,24 @@
         <h2>Publications</h2>
         <div>
             <form class="form-inline">
-
                 <select name="userId" id="select2-users-email" class="select2 form-control select2-width" data-autocomplete-url="{{ path('admin_user_search') }}"></select>
 
                 <select class="form-control" name="status">
+                    <option></option>
                     {% for status in statuses %}
                         <option value="{{ status }}">{{ status|trans({}, 'post_status') }}</option>
                     {% endfor %}
                 </select>
 
                 <div class="input-group date">
-                    <input type="text" class="form-control datepicker" placeholder="Date from" name="date_from">
+                    <input type="text" class="form-control datepicker" placeholder="Date from" name="dateFrom">
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
                 </div>
 
                 <div class="input-group date">
-                    <input type="text" class="form-control datepicker" placeholder="Date to" name="date_to">
+                    <input type="text" class="form-control datepicker" placeholder="Date to" name="dateTo">
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>

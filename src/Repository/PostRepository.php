@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Filters\PostFilter;
+use App\Repository\Concerns\Filterable;
 use App\Repository\Concerns\WithRelations;
 use App\Repository\Contracts\EagerLoadRelations;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,18 +23,25 @@ use Knp\Component\Pager\PaginatorInterface;
 class PostRepository extends ServiceEntityRepository implements EagerLoadRelations
 {
     use WithRelations;
+    use Filterable;
 
     /**
      * @var PaginatorInterface
      */
     private $paginator;
+    /**
+     * @var PostFilter
+     */
+    private $postFilter;
 
     public function __construct(
         ManagerRegistry $registry,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        PostFilter $postFilter
     ) {
         parent::__construct($registry, Post::class);
         $this->paginator = $paginator;
+        $this->postFilter = $postFilter;
     }
 
     public function getQueryForAllPublished(): QueryBuilder
@@ -85,14 +94,21 @@ class PostRepository extends ServiceEntityRepository implements EagerLoadRelatio
         return $query->getQuery()->getResult();
     }
 
-    public function getQueryForAllNotDraft(): QueryBuilder
+    public function getQueryForAllNotDraft($postFilterDTO): QueryBuilder
     {
-        return $this->createQueryBuilder('post')
+        $qb = $this->applyFilters(
+            $this->createQueryBuilder($alias = 'post'),
+            $this->postFilter,
+            $postFilterDTO,
+            $alias
+        );
+
+        return $qb
             ->andWhere('post.status <> :published')
             ->setParameter('published', Post::STATUS_DRAFT)
             ->join('post.author', 'author')
             ->addSelect('author')
-            ->orderBy('post.id', 'DESC');
+            ->orderBy('post.createdAt', 'DESC');
     }
 
     public function getRelationsNames(): array

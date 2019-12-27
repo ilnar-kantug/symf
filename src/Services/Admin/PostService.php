@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Admin;
 
 use App\Constants\Paginator;
+use App\DTO\Filters\Post as PostFilterDto;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,10 +37,10 @@ class PostService
         $this->em = $em;
     }
 
-    public function getNotDraftPosts(int $page): PaginationInterface
+    public function getNotDraftPosts(int $page, PostFilterDto $postFilterDTO): PaginationInterface
     {
         return $this->paginator->paginate(
-            $this->postRepository->getQueryForAllNotDraft(),
+            $this->postRepository->getQueryForAllNotDraft($postFilterDTO),
             $page,
             Paginator::POST_PER_PAGE
         );
