@@ -114,8 +114,12 @@ class PostController extends WebController
     public function show(
         int $id,
         RouterInterface $router
-    ): Response {
+    ) {
         $post = $this->postService->getPostWithComments($id);
+
+        if ($post->getStatus() !== Post::STATUS_PUBLISHED) {
+            return $this->fallBackWithError('Post is not published');
+        }
 
         $rate = null;
         if ($user = $this->getUser()) {
