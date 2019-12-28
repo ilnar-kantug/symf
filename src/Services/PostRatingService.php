@@ -30,7 +30,10 @@ class PostRatingService
     {
         $newRate = null;
         /** @var PostRating $rate */
-        $rate = $this->postRatingRepository->findOneBy(['user' => $postRating->getAuthor(), 'post' => $postRating->getPost()]);
+        $rate = $this->postRatingRepository->findOneBy([
+            'user' => $postRating->getAuthor(),
+            'post' => $postRating->getPost()
+        ]);
 
         if ($rate) {
             $rate->setScore($postRating->getScore());

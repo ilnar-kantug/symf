@@ -15,7 +15,7 @@ class Post implements FilterDto
 
     protected $fields = ['dateFrom', 'dateTo', 'userId', 'status'];
 
-    public function getData(): array
+    public function getDataIfExists(): array
     {
         $arr = [];
         foreach ($this->fields as $field) {

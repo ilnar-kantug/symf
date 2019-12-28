@@ -37,7 +37,7 @@ abstract class Filter
 
     public function calcFilters(): array
     {
-        $dtoKeys = array_keys($dtoData = $this->dto->getData());
+        $dtoKeys = array_keys($dtoData = $this->dto->getDataIfExists());
         $intersect = array_intersect($dtoKeys, $this->getAvailableFilters());
         $result = [];
         foreach ($intersect as $elem) {
@@ -47,12 +47,12 @@ abstract class Filter
         return $result;
     }
 
-    public function setDto(FilterDto $dto)
+    public function setDto(FilterDto $dto): void
     {
         $this->dto = $dto;
     }
 
-    public function setAlias(string $alias)
+    public function setAlias(string $alias): void
     {
         $this->alias = $alias;
     }

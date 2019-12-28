@@ -6,5 +6,5 @@ namespace App\DTO\Filters;
 
 interface FilterDto
 {
-    public function getData(): array;
+    public function getDataIfExists(): array;
 }
