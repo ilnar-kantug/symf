@@ -21,3 +21,5 @@ require('./pages/post-show');
 require('./pages/admin-users-list');
 
 require('./pages/admin-dashboard');
+
+require('./pages/post-create');

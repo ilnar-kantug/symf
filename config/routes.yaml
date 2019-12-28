@@ -86,3 +86,8 @@ admin_user_search:
     path: /admin/search
     controller: App\Controller\Admin\UserController::search
     methods: POST
+
+tag_search:
+    path: /tags/search
+    controller: App\Controller\TagController::search
+    methods: POST

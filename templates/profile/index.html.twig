@@ -30,12 +30,12 @@
                     <td><a href="{{ path('post_show', {id: post.id}) }}">{{ post.title }}</a></td>
                     <td class="profile-post-status-{{ post.status }}">{{ post.status|trans({}, 'post_status') }}</td>
                     <td>
-                        {% if post.status == 0 %}
+                        {% if post.status == 1 %}
                             <a class="btn btn-sm btn-info" href="{{ path('post_edit', {id: post.id}) }}">Edit</a>
                             <a class="btn btn-sm btn-warning" href="{{ path('post_publish', {id: post.id}) }}">Publish</a>
-                        {% elseif post.status == 1 %}
+                        {% elseif post.status == 2 %}
                             <span>-</span>
-                        {% elseif post.status == 2 or post.status == 3 %}
+                        {% elseif post.status == 3 or post.status == 4 %}
                             <a class="btn btn-sm btn-danger" href="{{ path('post_remove', {id: post.id}) }}">Remove</a>
                         {% endif %}
                     </td>

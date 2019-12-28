@@ -8,6 +8,7 @@ use App\Entity\Post;
 use App\DTO\Post as PostDTO;
 use App\Form\PostType;
 use App\Services\PostService;
+use App\Services\TagService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,16 +33,18 @@ class PostController extends WebController
     /**
      * @IsGranted("ROLE_USER")
      */
-    public function create(PostDTO $post)
+    public function create(PostDTO $post, TagService $tagService)
     {
         $form = $this->createForm(PostType::class);
         $form->handleRequest($this->request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $tags = $tagService->getTagsByIds($this->request->get('tags'));
             $post->set(
                 $this->getUser(),
                 $form->getData()->getTitle(),
                 $form->getData()->getPreview(),
-                $form->getData()->getBody()
+                $form->getData()->getBody(),
+                $tags
             );
 
             $this->postService->create($post);

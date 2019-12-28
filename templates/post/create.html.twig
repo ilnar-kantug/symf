@@ -8,7 +8,10 @@
 
         {{ form_start(form) }}
             {{ form_widget(form) }}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">
+
+            <select name="tags[]" id="select2-tags" class="form-control my-3" multiple="multiple" data-autocomplete-url="{{ path('tag_search') }}"></select>
+
+            <button class="btn btn-lg btn-primary btn-block my-3" type="submit">
                 Create
             </button>
         {{ form_end(form) }}

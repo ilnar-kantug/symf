@@ -46,6 +46,12 @@ class PostService
         $post->setCreatedAt(new \DateTime());
         $post->setStatus(Post::STATUS_DRAFT);
 
+        if (!empty($postDTO->getTags())) {
+            foreach ($postDTO->getTags() as $tag) {
+                $post->addTag($tag);
+            }
+        }
+
         $this->em->persist($post);
         $this->em->flush();
     }

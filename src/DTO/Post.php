@@ -12,13 +12,15 @@ class Post
     private $title;
     private $preview;
     private $body;
+    private $tags;
 
-    public function set(User $author, string $title, string $preview, string $body): void
+    public function set(User $author, string $title, string $preview, string $body, array $tags): void
     {
         $this->author = $author;
         $this->title = $title;
         $this->preview = $preview;
         $this->body = $body;
+        $this->tags = $tags;
     }
 
     public function getAuthor(): User
@@ -39,5 +41,10 @@ class Post
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getTags(): array
+    {
+        return $this->tags;
     }
 }
