@@ -33,4 +33,14 @@
             <button class="btn btn-primary" type="submit">Log In</button>
         </div>
     </form>
+
+    {% if admin %}
+        <div class="my-5">
+            <h3>Admin Credentials</h3>
+            <div>
+                <div>Email: {{ admin.email }}</div>
+                <div>Pass: password</div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
