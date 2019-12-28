@@ -14,9 +14,9 @@ class User implements UserInterface
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
 
-    public const STATUS_NOT_VERIFIED = 0;
-    public const STATUS_ACTIVE = 1;
-    public const STATUS_BANNED = 2;
+    public const STATUS_NOT_VERIFIED = 1;
+    public const STATUS_ACTIVE = 2;
+    public const STATUS_BANNED = 3;
 
     public const STATUSES = [
         self::STATUS_NOT_VERIFIED,

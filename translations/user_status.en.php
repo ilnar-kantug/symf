@@ -1,7 +1,7 @@
 <?php
 
 return [
-    '0' => 'Not Verified',
-    '1' => 'Active',
-    '2' => 'Banned',
+    '1' => 'Not Verified',
+    '2' => 'Active',
+    '3' => 'Banned',
 ];
