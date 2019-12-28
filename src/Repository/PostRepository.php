@@ -48,7 +48,8 @@ class PostRepository extends ServiceEntityRepository implements EagerLoadRelatio
     {
         $query = $this->createQueryBuilder($alias = 'post')
             ->andWhere('post.status = :published')
-            ->setParameter('published', Post::STATUS_PUBLISHED);
+            ->setParameter('published', Post::STATUS_PUBLISHED)
+            ->orderBy('post.createdAt', 'DESC');
 
         $this->fetchRelations(['author', 'tags', 'comments', 'postRatings'], $alias, $query);
 
