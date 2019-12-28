@@ -9,22 +9,23 @@
             <form class="form-inline">
                 <select name="userId" id="select2-users-email" class="select2 form-control select2-width" data-autocomplete-url="{{ path('admin_user_search') }}"></select>
 
+                {% set old_status = old('status') %}
                 <select class="form-control" name="status">
                     <option></option>
                     {% for status in statuses %}
-                        <option value="{{ status }}">{{ status|trans({}, 'post_status') }}</option>
+                        <option {% if old_status == status %}selected{% endif %} value="{{ status }}">{{ status|trans({}, 'post_status') }}</option>
                     {% endfor %}
                 </select>
 
                 <div class="input-group date">
-                    <input type="text" class="form-control datepicker" placeholder="Date from" name="dateFrom">
+                    <input type="text" value="{{ old('dateFrom') }}" class="form-control datepicker" placeholder="Date from" name="dateFrom">
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
                 </div>
 
                 <div class="input-group date">
-                    <input type="text" class="form-control datepicker" placeholder="Date to" name="dateTo">
+                    <input type="text" value="{{ old('dateTo') }}" class="form-control datepicker" placeholder="Date to" name="dateTo">
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
