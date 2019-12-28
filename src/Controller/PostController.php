@@ -7,11 +7,26 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\DTO\Post as PostDTO;
 use App\Form\PostType;
+use App\Services\PostService;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PostController extends WebController
 {
+    /**
+     * @var PostService
+     */
+    private $postService;
+
+    public function __construct(
+        RequestStack $requestStack,
+        PostService $postService
+    ) {
+        parent::__construct($requestStack);
+        $this->postService = $postService;
+    }
+
     /**
      * @IsGranted("ROLE_USER")
      */

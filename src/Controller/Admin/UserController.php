@@ -23,10 +23,9 @@ class UserController extends WebController
 
     public function __construct(
         RequestStack $requestStack,
-        PostService $postService,
         UserService $service
     ) {
-        parent::__construct($requestStack, $postService);
+        parent::__construct($requestStack);
         $this->service = $service;
     }
 

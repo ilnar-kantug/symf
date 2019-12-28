@@ -22,17 +22,11 @@ class WebController extends AbstractController
      * @var Request
      */
     protected $request;
-    /**
-     * @var PostService
-     */
-    protected $postService;
 
     public function __construct(
-        RequestStack $requestStack,
-        PostService $postService
+        RequestStack $requestStack
     ) {
         $this->request = $requestStack->getCurrentRequest();
-        $this->postService = $postService;
     }
 
     protected function getPage(): int
