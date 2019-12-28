@@ -8,6 +8,7 @@ use App\DTO\UserRegister;
 use App\Exceptions\SecurityException;
 use App\Form\UserRegisterFormType as UserForm;
 use App\Services\SecurityService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -47,7 +48,7 @@ class SecurityController extends WebController
         ]);
     }
 
-    public function confirm(SecurityService $service)
+    public function confirm(SecurityService $service): RedirectResponse
     {
         if (empty($token = $this->request->get('token'))) {
             return $this->fallToRouteWithError('You have no token. Contact to admin.');

@@ -9,6 +9,7 @@ use App\Entity\PostRating;
 use App\DTO\PostRating as PostRatingDTO;
 use App\Services\PostRatingService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -19,7 +20,7 @@ class PostRatingController extends WebController
     /**
      * @IsGranted("RATE", subject="post")
      */
-    public function like(Post $post, PostRatingService $service, PostRatingDTO $postRating)
+    public function like(Post $post, PostRatingService $service, PostRatingDTO $postRating): JsonResponse
     {
         if ($this->failedCsrf('rating')) {
             return $this->fallBackJson('Ain\'t you trying to hack me?!');
@@ -35,7 +36,7 @@ class PostRatingController extends WebController
     /**
      * @IsGranted("RATE", subject="post")
      */
-    public function disLike(Post $post, PostRatingService $service, PostRatingDTO $postRating)
+    public function disLike(Post $post, PostRatingService $service, PostRatingDTO $postRating): JsonResponse
     {
         if ($this->failedCsrf('rating')) {
             return $this->fallBackJson('Ain\'t you trying to hack me?!');

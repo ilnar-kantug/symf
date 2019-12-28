@@ -6,13 +6,14 @@ namespace App\Controller;
 
 use App\Services\ProfileService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends WebController
 {
     /**
      * @IsGranted("ROLE_USER")
      */
-    public function index(ProfileService $service)
+    public function index(ProfileService $service): Response
     {
         $user = $this->getUser();
 

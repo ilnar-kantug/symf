@@ -8,7 +8,9 @@ use App\Entity\Post;
 use App\DTO\Post as PostDTO;
 use App\Form\PostType;
 use App\Services\PostService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -82,7 +84,7 @@ class PostController extends WebController
      * @IsGranted("ROLE_USER")
      * @IsGranted("REMOVE_POST", subject="post")
      */
-    public function remove(Post $post)
+    public function remove(Post $post): RedirectResponse
     {
         $this->postService->remove($post);
 
@@ -96,7 +98,7 @@ class PostController extends WebController
      * @IsGranted("ROLE_USER")
      * @IsGranted("CHANGE_POST", subject="post")
      */
-    public function publish(Post $post)
+    public function publish(Post $post): RedirectResponse
     {
         $this->postService->publish($post);
 
@@ -109,7 +111,7 @@ class PostController extends WebController
     public function show(
         int $id,
         RouterInterface $router
-    ) {
+    ): Response {
         $post = $this->postService->getPostWithComments($id);
 
         $rate = null;
