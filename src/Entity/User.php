@@ -7,7 +7,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class User implements UserInterface
 {
@@ -33,11 +32,6 @@ class User implements UserInterface
 
     private $id;
 
-    /**
-     * @Assert\NotBlank(message="Please enter an email")
-     * @Assert\Email()
-     * @Assert\Length(max="180", maxMessage="Your email is too long")
-     */
     private $email;
 
     private $roles = [];
@@ -48,10 +42,6 @@ class User implements UserInterface
 
     private $status;
 
-    /**
-     * @Assert\NotBlank(message="Please enter your full name")
-     * @Assert\Length(max="255", maxMessage="Your full name is too long")
-     */
     private $fullName;
 
     private $posts;

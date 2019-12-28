@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 class PostRating
 {
     public const LIKE_SCORE = 1;
@@ -13,19 +11,10 @@ class PostRating
 
     private $id;
 
-    /**
-     * @Assert\NotNull()
-     */
     private $score;
 
-    /**
-     * @Assert\NotNull()
-     */
     private $user;
 
-    /**
-     * @Assert\NotNull()
-     */
     private $post;
 
     public function getId(): ?int

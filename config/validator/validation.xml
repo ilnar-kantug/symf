@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                    https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="App\Entity\User">
+        <property name="email">
+            <constraint name="NotBlank">
+                <option name="message">Please enter an email</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="max">180</option>
+                <option name="maxMessage">Your email is too long</option>
+            </constraint>
+            <constraint name="Email"/>
+        </property>
+
+        <property name="fullName">
+            <constraint name="NotBlank">
+                <option name="message">Please enter your full name</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="max">255</option>
+                <option name="maxMessage">Your full name is too long</option>
+            </constraint>
+        </property>
+    </class>
+
+    <class name="App\Entity\PostRating">
+        <property name="score">
+            <constraint name="NotBlank" />
+        </property>
+        <property name="user">
+            <constraint name="NotBlank" />
+        </property>
+        <property name="post">
+            <constraint name="NotBlank" />
+        </property>
+    </class>
+
+    <class name="App\Entity\Post">
+        <property name="title">
+            <constraint name="NotBlank">
+                <option name="message">Please enter the title</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="max">255</option>
+                <option name="maxMessage">The title is too long</option>
+            </constraint>
+        </property>
+
+        <property name="preview">
+            <constraint name="NotBlank">
+                <option name="message">Please enter the preview</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="max">300</option>
+                <option name="maxMessage">The preview is too long</option>
+            </constraint>
+        </property>
+
+        <property name="body">
+            <constraint name="NotBlank">
+                <option name="message">Please enter the body of a post</option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

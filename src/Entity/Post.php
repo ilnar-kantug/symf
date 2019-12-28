@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class Post
 {
@@ -24,15 +23,8 @@ class Post
 
     private $id;
 
-    /**
-     * @Assert\NotBlank(message="Please enter the title")
-     * @Assert\Length(max="255", maxMessage="The title is too long")
-     */
     private $title;
 
-    /**
-     * @Assert\NotBlank(message="Please enter the body of a post")
-     */
     private $body;
 
     private $createdAt;
@@ -47,10 +39,6 @@ class Post
 
     private $postRatings;
 
-    /**
-     * @Assert\NotBlank(message="Please enter the preview")
-     * @Assert\Length(max="300", maxMessage="The preview is too long")
-     */
     private $preview;
 
     public function __construct()
