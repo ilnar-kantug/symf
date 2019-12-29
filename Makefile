@@ -40,3 +40,6 @@ npm-run-watch:
 
 npm-run-dev:
 	docker-compose run --rm node npm run dev
+
+run-queue
+	docker-compose run --rm php php bin/console messenger:consume async -vv

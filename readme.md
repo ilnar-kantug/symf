@@ -8,6 +8,12 @@ To start working with the project fire following commands:
   * ```make up```
   * ```make scaffold```
 
+Then run queue worker:
+
+```make run-queue```
+
+____
+
 Site will be available here:
 
 ```http://localhost:8080/```
@@ -15,3 +21,13 @@ Site will be available here:
 MailHog here:
 
 ```http://localhost:8025/```
+
+___
+
+To enter to the project console:
+
+```make php```
+
+There you could check CS:
+
+```composer cs```
