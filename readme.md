@@ -22,6 +22,10 @@ MailHog here:
 
 ```http://localhost:8025/```
 
+Redis web ui here:
+
+```http://localhost:9987/```
+
 ___
 
 To enter to the project console:

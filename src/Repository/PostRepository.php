@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Constants\TopRated;
 use App\Entity\Post;
 use App\Filters\PostFilter;
 use App\Repository\Concerns\Filterable;
@@ -110,6 +111,18 @@ class PostRepository extends ServiceEntityRepository implements EagerLoadRelatio
             ->join('post.author', 'author')
             ->addSelect('author')
             ->orderBy('post.createdAt', 'DESC');
+    }
+
+    public function getTopRatedPosts(): array
+    {
+        return $this->createQueryBuilder('post')
+            ->leftJoin('post.postRatings', 'post_ratings')
+            ->addSelect('post, SUM(post_ratings.score) AS rating')
+            ->orderBy('rating', 'DESC')
+            ->groupBy('post.id')
+            ->setMaxResults(TopRated::POSTS_LIMIT)
+            ->getQuery()
+            ->getResult();
     }
 
     public function getRelationsNames(): array

@@ -5,29 +5,52 @@
 {% block body %}
     <h1>POSTS</h1>
     <div class="posts_home">
-        {% for post in posts %}
-            <div class="card">
-                <div class="card-header">
-                    <div>{{ post.title }}</div>
-                    {% include 'partials/tags.html.twig' with {'tags': post.tags} %}
+
+        <div class="row">
+            <div class="col-8">
+                {% for post in posts %}
+                    <div class="card">
+                        <div class="card-header">
+                            <div>{{ post.title }}</div>
+                            {% include 'partials/tags.html.twig' with {'tags': post.tags} %}
+                        </div>
+                        <div class="card-body">
+                            {{ post.preview }}
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                Author: {{ post.author.fullName }}
+                            </div>
+                            <div>
+                                Rating: {{ count_rating(post.postRatings) }}
+                            </div>
+                            <div>
+                                <span class="badge badge-primary">Comments: <span class="badge badge-secondary">{{ post.comments|length  }}</span></span>
+                            </div>
+                            <div class="read-more"><a href="{{ path('post_show', {id: post.id}) }}" class="btn btn-primary">Read more</a></div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-4">
+                <div class="mb-5">
+                    <h5>Top posts</h5>
+                    {% for topPost in topPosts %}
+                        <div>
+                            <a href="{{ path('post_show', {id: topPost.0.id}) }}">{{ topPost.0.title }}</a> - {{ topPost.rating }}
+                        </div>
+                    {% endfor %}
                 </div>
-                <div class="card-body">
-                    {{ post.preview }}
-                </div>
-                <div class="card-footer">
-                    <div>
-                        Author: {{ post.author.fullName }}
-                    </div>
-                    <div>
-                        Rating: {{ count_rating(post.postRatings) }}
-                    </div>
-                    <div>
-                        <span class="badge badge-primary">Comments: <span class="badge badge-secondary">{{ post.comments|length  }}</span></span>
-                    </div>
-                    <div class="read-more"><a href="{{ path('post_show', {id: post.id}) }}" class="btn btn-primary">Read more</a></div>
+                <div>
+                    <h5>Top authors</h5>
+                    {% for topAuthor in topAuthors %}
+                        <div>
+                            {{ topAuthor.0.fullName }}({{ topAuthor.0.email }}) - {{ topAuthor.rating }}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-        {% endfor %}
+        </div>
     </div>
     <div>
         {{ knp_pagination_render(posts) }}

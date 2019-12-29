@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Constants\TopRated;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -82,5 +83,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
         return $admin[0] ?? null;
+    }
+
+    public function getTopRatedAuthors(): array
+    {
+        return $this->createQueryBuilder('user')
+            ->leftJoin('user.posts', 'user_posts')
+            ->leftJoin('user_posts.postRatings', 'post_ratings')
+            ->addSelect('user, SUM(post_ratings.score) AS rating')
+            ->orderBy('rating', 'DESC')
+            ->groupBy('user.id')
+            ->setMaxResults(TopRated::AUTHORS_LIMIT)
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -13,6 +13,8 @@ class HomeController extends WebController
     {
         return $this->render('home/index.html.twig', [
             'posts' => $service->getPublishedPosts($this->getPage()),
+            'topPosts' => $service->getTopRatedPosts(),
+            'topAuthors' => $service->getTopRatedAuthors(),
         ]);
     }
 }
