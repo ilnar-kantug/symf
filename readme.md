@@ -24,6 +24,8 @@ MailHog here:
 
 Redis web ui here:
 
+root / secret
+
 ```http://localhost:9987/```
 
 ___
