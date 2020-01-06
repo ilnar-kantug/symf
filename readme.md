@@ -29,6 +29,9 @@ root / secret
 ```http://localhost:9987/```
 
 ___
+Run tests with:
+
+```make phpunit```
 
 To enter to the project console:
 

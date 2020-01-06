@@ -43,3 +43,6 @@ npm-run-dev:
 
 run-queue:
 	docker-compose run --rm php php bin/console messenger:consume async -vv
+
+phpunit:
+	docker-compose run --rm php php bin/phpunit
