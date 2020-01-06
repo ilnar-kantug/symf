@@ -7,7 +7,7 @@ docker-up:
 	docker-compose up -d
 
 docker-down:
-	docker-compose down -v --remove-orphans
+	docker-compose down --remove-orphans
 
 docker-up-build:
 	docker-compose up -d --build

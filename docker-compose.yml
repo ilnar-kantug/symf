@@ -46,7 +46,7 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
     volumes:
       - ./docker/services/mysql/config-overrides.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/volums/database/:/var/lib/mysql
+      - mysql:/var/lib/mysql
 
   node:
     image: node:12.14-alpine
@@ -79,3 +79,6 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
+
+volumes:
+  mysql:
